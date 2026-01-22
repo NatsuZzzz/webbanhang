@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/image/icon.png}">
     <title>Nike Login - Enter Email</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         /* 1. SETUP CƠ BẢN */
         * {
@@ -19,15 +21,18 @@
             background-color: #fff;
             height: 100vh;
             display: flex;
-            justify-content: center; /* Căn giữa ngang */
-            align-items: flex-start; /* Để form cách top 1 khoảng */
+            justify-content: center;
+            /* Căn giữa ngang */
+            align-items: flex-start;
+            /* Để form cách top 1 khoảng */
             padding-top: 60px;
         }
 
         /* 2. KHUNG CHỨA FORM */
         .login-wrapper {
             width: 100%;
-            max-width: 460px; /* Độ rộng chuẩn của Nike form */
+            max-width: 460px;
+            /* Độ rộng chuẩn của Nike form */
             padding: 0 20px;
         }
 
@@ -37,9 +42,10 @@
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .logos img {
-            height: 20px; /* Logo nhỏ gọn */
+            height: 20px;
+            /* Logo nhỏ gọn */
             width: auto;
             display: block;
         }
@@ -50,7 +56,8 @@
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 20px;
-            max-width: 80%; /* Để chữ xuống dòng giống hình */
+            max-width: 80%;
+            /* Để chữ xuống dòng giống hình */
         }
 
         /* 5. QUỐC GIA */
@@ -119,14 +126,16 @@
         /* 8. BUTTON CONTINUE (LỆCH PHẢI) */
         .btn-container {
             display: flex;
-            justify-content: flex-end; /* Đẩy nút sang phải */
+            justify-content: flex-end;
+            /* Đẩy nút sang phải */
         }
 
         .btn-continue {
             background-color: #111;
             color: white;
             padding: 12px 24px;
-            border-radius: 30px; /* Bo tròn kiểu viên thuốc */
+            border-radius: 30px;
+            /* Bo tròn kiểu viên thuốc */
             font-weight: 700;
             border: none;
             cursor: pointer;
@@ -134,11 +143,12 @@
         }
 
         .btn-continue:hover {
-            background-color: #333; /* Màu xám đậm khi hover */
+            background-color: #333;
+            /* Màu xám đậm khi hover */
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="login-wrapper">
@@ -155,23 +165,16 @@
             Vietnam <a href="#">Change</a>
         </div>
 
-        <form th:action="@{/login/check-email}" th:object="${loginForm}" method="POST">
-            
+        <form th:action="@{/login/check-email}" th:object="${ChangeMail}" method="POST">
+
             <div class="form-group">
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Email*" 
-                           th:field="*{email}"
-                           th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''">
+                    <input type="text" placeholder="Email*" th:field="*{email}"
+                        th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''">
                 </div>
-                
-                <div class="error-message" 
-                     th:if="${#fields.hasErrors('email')}" 
-                     th:errors="*{email}">
-                </div>
-            </div>
 
-            <div class="legal-text">
-                By continuing, I agree to Nike's <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.
+                <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                </div>
             </div>
 
             <div class="btn-container">
@@ -181,4 +184,5 @@
     </div>
 
 </body>
+
 </html>

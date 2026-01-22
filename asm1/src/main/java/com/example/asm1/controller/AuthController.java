@@ -1,6 +1,6 @@
 package com.example.asm1.controller;
 
-
+import com.example.asm1.Entity.RegisterForm;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,35 +9,46 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.asm1.Entity.RegisterForm;
-
 @Controller
 public class AuthController {
 
-    // 1. Hiển thị trang đăng ký (GET)
+    // 1. GET: Hiển thị trang đăng ký
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        // Tạo một object rỗng để hứng dữ liệu
-        model.addAttribute("registerForm", new RegisterForm());
-        return "register"; // Trả về file register.html
+        
+        // --- [CHỐT CHẶN] KIỂM TRA EMAIL ---
+        
+        // Kiểm tra xem có email được gửi sang từ trang CheckMail không
+        if (!model.containsAttribute("userEmail")) {
+            // Nếu không có email (truy cập chui hoặc chưa nhập) -> ĐÁ VỀ TRANG NHẬP MAIL
+            return "redirect:/checkMail"; 
+        }
+
+        // --- [NHẬN BÓNG] LẤY EMAIL RA ---
+        String receivedEmail = (String) model.getAttribute("userEmail");
+
+        // Tạo form mới và ĐIỀN SẴN EMAIL vào
+        RegisterForm form = new RegisterForm();
+        form.setEmail(receivedEmail); // <--- Dòng này giúp email hiện lên form
+
+        model.addAttribute("registerForm", form);
+        return "register"; 
     }
 
-    // 2. Xử lý khi bấm nút "Create Account" (POST)
+    // 2. POST: Xử lý đăng ký (Giữ nguyên logic của em)
     @PostMapping("/register")
     public String processRegister(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
                                   BindingResult bindingResult,
                                   Model model) {
 
-        // Nếu có lỗi (để trống, pass ngắn...) -> Trả về lại trang đăng ký kèm lỗi
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
-        // --- XỬ LÝ LOGIC LƯU DB Ở ĐÂY ---
-        // Ví dụ: userService.save(registerForm);
-        System.out.println("Đăng ký thành công cho: " + registerForm.getFirstName());
+        // Test xem email có được gửi xuống không
+        System.out.println("Đăng ký thành công!");
+        System.out.println("Email: " + registerForm.getEmail()); 
 
-        // Đăng ký xong thì đá về trang home hoặc login
         return "redirect:/home";
     }
 }
