@@ -1,8 +1,10 @@
 package com.example.asm1.controller;
 
 import com.example.asm1.Entity.MailForm;
-import jakarta.servlet.http.HttpSession; // <--- Import
+import com.example.asm1.service.MailService; // <--- Import service
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired; // <--- Import
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult; 
@@ -13,52 +15,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class CheckMailController {
 
-    // 1. GET: Hiển thị trang (ĐÂY LÀ CHỖ CẦN SỬA)
-    @GetMapping("/checkMail")
-    public String showLoginPage(Model model, HttpSession session) { // <--- Thêm HttpSession
-        
-        // Tạo form mới
-        model.addAttribute("ChangeMail", new MailForm());
+    @Autowired
+    private MailService mailService; // <--- Tiêm service vào đây
 
-        // --- [QUAN TRỌNG] LẤY LỖI TỪ SESSION RA ---
-        // AuthController đã nhét lỗi vào cái hộp tên là "sessionError"
+    @GetMapping("/checkMail")
+    public String showLoginPage(Model model, HttpSession session) {
+        model.addAttribute("ChangeMail", new MailForm());
         String error = (String) session.getAttribute("sessionError");
-        
         if (error != null) {
-            System.out.println("LOG: Tìm thấy lỗi từ Register đá về: " + error);
-            
-            // Chuyền lỗi này sang Model (đặt tên là "errorMessage" để HTML hứng)
             model.addAttribute("errorMessage", error);
-            
-            // Xóa ngay để F5 không hiện lại
             session.removeAttribute("sessionError");
         }
-
         return "ChangeMail"; 
     }
 
-    // 2. POST: Xử lý (Giữ nguyên code debug của em)
     @PostMapping("/login/check-email")
     public String checkEmail(@Valid @ModelAttribute("ChangeMail") MailForm mailForm,
                              BindingResult bindingResult, 
                              HttpSession session) { 
         
         System.out.println("--- DEBUG START ---");
-        System.out.println("Email nhận được từ form: '" + mailForm.getEmail() + "'");
-
+        
         if (bindingResult.hasErrors()) {
-            System.out.println("LỖI 1: Dính Validation!");
             return "ChangeMail"; 
         }
 
-        if (mailForm.getEmail() == null || mailForm.getEmail().trim().isEmpty()) {
-            System.out.println("LỖI 2: Email rỗng!");
+        String email = mailForm.getEmail();
+        if (email == null || email.trim().isEmpty()) {
             return "ChangeMail"; 
         }
 
-        System.out.println("SUCCESS: Chuyển sang Register...");
-        session.setAttribute("userEmail", mailForm.getEmail());
+        try {
+            // --- ĐOẠN QUAN TRỌNG ĐÂY KU EM ---
+            // 1. Gọi service gửi mail thật
+            String otpCode = mailService.sendOtp(email);
+            
+            // 2. Lưu cả Email và Mã OTP vào Session để tí nữa trang Register lôi ra dùng
+            session.setAttribute("userEmail", email);
+            session.setAttribute("otpCode", otpCode); 
+            
+            System.out.println("SUCCESS: Đã gửi mã " + otpCode + " tới " + email);
+            
+            // 3. Sau khi gửi xong thì mới redirect sang Register
+            return "redirect:/register"; 
 
-        return "redirect:/register"; 
+        } catch (Exception e) {
+            System.out.println("LỖI GỬI MAIL: " + e.getMessage());
+            session.setAttribute("sessionError", "Không gửi được email. Kiểm tra lại kết nối!");
+            return "redirect:/checkMail";
+        }
     }
 }

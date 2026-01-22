@@ -21,9 +21,20 @@
                     <span>|</span>
                     <a href="#">Help</a>
                     <span>|</span>
-                    <a href="#">Join Us</a>
-                    <span>|</span>
-                    <a href="http://localhost:8080/checkMail">Sign In</a>
+
+                    <th:block th:if="${session.loggedInUser == null}">
+                        <a href="#">Join Us</a>
+                        <span>|</span>
+                        <a th:href="@{/checkMail}">Sign In</a>
+                    </th:block>
+
+                    <th:block th:unless="${session.loggedInUser == null}">
+                        <span style="font-weight: 600;">
+                            Hi, <span th:text="${session.loggedInUser.firstName}">Member</span>
+                        </span>
+                        <span>|</span>
+                        <a th:href="@{/logout}" style="color: #d43f3a;">Log Out</a>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -35,7 +46,7 @@
                 </a>
 
                 <div class="nav-links">
-                    
+
                     <div class="nav-item">
                         <a href="#">New & Featured</a>
                         <div class="dropdown-menu">

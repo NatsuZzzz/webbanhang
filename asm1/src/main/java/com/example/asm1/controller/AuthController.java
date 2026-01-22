@@ -37,19 +37,55 @@ public class AuthController {
         model.addAttribute("registerForm", form);
         return "register";
     }
-//NEWLINE
+
+    // NEWLINE
     // 2. POST: Xử lý đăng ký
+    // 2. POST: Xử lý đăng ký (Có kiểm tra mã OTP)
     @PostMapping("/register")
     public String processRegister(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
-                                  BindingResult bindingResult,
-                                  HttpSession session) {
+            BindingResult bindingResult,
+            HttpSession session,
+            Model model) {
 
+        // 1. Kiểm tra lỗi Validation từ Form (Trống, định dạng email, password...)
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
-        System.out.println("Đăng ký thành công: " + registerForm.getEmail());
-        session.removeAttribute("userEmail"); // Xóa email đã lưu
+        // 2. Lấy mã OTP từ session và từ người dùng nhập
+        String correctOtp = (String) session.getAttribute("otpCode");
+        String userEnteredCode = registerForm.getCode();
+
+        // 3. LOGIC KIỂM TRA (Thay thế cho cái everythingIsOk bị lỗi)
+        if (correctOtp == null) {
+            bindingResult.rejectValue("code", "error.registerForm", "Mã đã hết hạn, vui lòng gửi lại mã!");
+            return "register";
+        }
+
+        if (!correctOtp.equals(userEnteredCode)) {
+            bindingResult.rejectValue("code", "error.registerForm", "Mã xác nhận không đúng!");
+            return "register";
+        }
+
+        // --- ĐẾN ĐÂY LÀ "EVERYTHING IS OK" RỒI ĐẤY ---
+
+        // 4. Lưu thông tin người dùng vào Session để Header hiển thị tên
+        session.setAttribute("loggedInUser", registerForm);
+
+        // 5. Xóa mã OTP sau khi dùng xong
+        session.removeAttribute("otpCode");
+
+        System.out.println("Đăng ký thành công cho Member: " + registerForm.getFirstName());
+        return "redirect:/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // 1. Xóa toàn bộ dữ liệu trong session để người dùng thoát ra hoàn toàn
+        session.invalidate();
+
+        // 2. Sau khi thoát, đá người dùng về trang chủ (lúc này Header sẽ tự hiện lại
+        // nút Sign In)
         return "redirect:/home";
     }
 }
