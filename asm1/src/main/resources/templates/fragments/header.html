@@ -25,17 +25,13 @@
                         <a th:href="@{/service}">QUẢN LÍ USER</a>
                     </li>
                     <li class="menu-item">
-                        <a th:href="@{/list/products}">THÊM SẢN PHẨM</a>
+                        <a th:href="@{/list/add}">THÊM SẢN PHẨM</a>
                     </li>
                 </ul>
 
 
                 <div class="top-right-links">
-                    <a th:href="@{/list/add}">Bài đăng</a>
-                    <span>|</span>
-                    <a href="#">Trợ giúp</a>
-                    <span>|</span>
-
+                  
                     <th:block th:if="${session.loggedInUser == null}">
                         <a th:href="@{/login}">Đăng nhập</a>
                         <span>|</span>

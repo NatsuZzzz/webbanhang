@@ -1,6 +1,7 @@
+
 package com.example.asm1.controller;
 
-import com.example.asm1.Entity.RegisterForm;
+import com.example.asm1.Entity.User;
 import com.example.asm1.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthController {
@@ -19,194 +17,88 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    // 1. GET: Hiển thị trang đăng ký
+    // 1. Hiển thị trang đăng ký
     @GetMapping("/register")
     public String showRegisterForm(Model model, HttpSession session) {
-        String receivedEmail = (String) session.getAttribute("userEmail");
+        String email = (String) session.getAttribute("userEmail");
+        // Nếu chưa qua bước check email thì quay lại
+        if (email == null) return "redirect:/checkMail";
 
-        // Chặn nếu người dùng chưa qua bước nhập email
-        if (receivedEmail == null || receivedEmail.isEmpty()) {
-            session.setAttribute("sessionError", "Vui lòng nhập email trước khi đăng ký!");
-            return "redirect:/checkMail";
-        }
+        User user = new User();
+        user.setEmail(email);
+        model.addAttribute("registerForm", user); 
+        return "register"; 
+    }
 
-        RegisterForm form = new RegisterForm();
-        form.setEmail(receivedEmail);
-        model.addAttribute("registerForm", form);
+    // 2. Xử lý đăng ký
+  @PostMapping("/register")
+public String processRegister(
+        @Valid @ModelAttribute("registerForm") User user,
+        BindingResult bindingResult,
+        HttpSession session,
+        Model model) {
+
+    // 1. Kiểm tra lỗi Validation (trống trường, mật khẩu...)
+    if (bindingResult.hasErrors()) {
         return "register";
     }
 
-    // 2. POST: Xử lý đăng ký (Lưu vào SQL Server và Redirect sang Login)
-    @PostMapping("/register")
-    public String processRegister(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
-            BindingResult bindingResult,
-            HttpSession session,
-            Model model) {
-
-        // --- BƯỚC 1: KIỂM TRA LỖI VALIDATION ---
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
-
-        // --- BƯỚC 2: KIỂM TRA MÃ OTP ---
-        String correctOtp = (String) session.getAttribute("otpCode");
-        String userEnteredCode = registerForm.getCode();
-
-        if (correctOtp == null || !correctOtp.equals(userEnteredCode)) {
-            bindingResult.rejectValue("code", "error.registerForm", "Mã xác nhận không đúng hoặc đã hết hạn!");
-            return "register";
-        }
-
-        // --- BƯỚC 3: LƯU DATABASE ---
-        try {
-            // Lưu người dùng vào SQL Server vĩnh viễn
-            userRepository.save(registerForm);
-
-            // Xóa dữ liệu tạm trong session cho sạch sẽ
-            session.removeAttribute("otpCode");
-            session.removeAttribute("userEmail");
-
-            System.out.println("LOG: Đăng ký thành công cho Member: " + registerForm.getEmail());
-
-            // Tự động chuyển sang trang Login sau khi thành công
-            return "redirect:/login";
-
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi: Email này đã tồn tại trong hệ thống!");
-            return "register";
-        }
+    // 2. Kiểm tra mã OTP
+    String sessionOtp = (String) session.getAttribute("otpCode");
+    if (sessionOtp == null || !sessionOtp.equals(user.getCode())) {
+        bindingResult.rejectValue("code", "error.user", "Mã xác nhận không đúng!");
+        return "register";
     }
 
-    // 3. GET: Hiển thị trang Login
+    try {
+        // Kiểm tra trùng email
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            model.addAttribute("error", "Email đã tồn tại!");
+            return "register";
+        }
+
+        // Gán Role mặc định từ DB (USER có ID là 2 dựa trên SQL của bạn)
+        user.setRoleId(2); 
+        userRepository.save(user);
+
+        session.removeAttribute("otpCode");
+        session.removeAttribute("userEmail");
+
+        return "redirect:/login"; // TRẢ VỀ TRANG ĐĂNG NHẬP KHI THÀNH CÔNG
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        model.addAttribute("error", "Lỗi DB: Hãy đảm bảo đã chạy SQL tạo bảng mới!");
+        return "register";
+    }
+}
+    // 3. Đăng nhập
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLogin() {
         return "login";
     }
 
-    // 4. POST: Xử lý Đăng nhập (Kiểm tra từ Database)
     @PostMapping("/login")
-    public String processLogin(@RequestParam("email") String email,
-            @RequestParam("password") String password,
+    public String processLogin(
+            @RequestParam String email,
+            @RequestParam String password,
             HttpSession session,
             Model model) {
 
-        // Tìm kiếm người dùng trong Database theo Email
-        RegisterForm userInDb = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email.trim());
 
-        // So khớp mật khẩu
-        if (userInDb != null && userInDb.getPassword().equals(password)) {
-            // Lưu thông tin vào session để Header hiển thị tên "Hi, "
-            session.setAttribute("loggedInUser", userInDb);
-            System.out.println("LOG: Đăng nhập thành công: " + email);
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("loggedInUser", user);
             return "redirect:/home";
-        } else {
-            model.addAttribute("error", "Email hoặc mật khẩu không chính xác!");
-            return "login";
         }
+
+        model.addAttribute("error", "Email hoặc mật khẩu không chính xác!");
+        return "login";
     }
 
-    // 5. GET: Đăng xuất
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // Xóa toàn bộ session
+        session.invalidate();
         return "redirect:/home";
     }
-
-    // 1. Hiển thị trang đổi mật khẩu
-    @GetMapping("/change-password")
-    public String showChangePasswordForm(HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login";
-        }
-        return "change-password";
-    }
-
-    // 2. Xử lý lưu mật khẩu mới
-    @PostMapping("/change-password")
-    public String processChangePassword(@RequestParam("currentPassword") String currentPassword,
-            @RequestParam("newPassword") String newPassword,
-            @RequestParam("confirmPassword") String confirmPassword,
-            HttpSession session, Model model) {
-
-        RegisterForm sessionUser = (RegisterForm) session.getAttribute("loggedInUser");
-        if (sessionUser == null)
-            return "redirect:/login";
-
-        if (!sessionUser.getPassword().equals(currentPassword)) {
-            model.addAttribute("error", "Mật khẩu hiện tại không đúng!");
-            return "change-password";
-        }
-
-        if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("error", "Xác nhận mật khẩu mới không khớp!");
-            return "change-password";
-        }
-
-        try {
-            // GỌI TRUY VẤN THUẦN ĐỂ ÉP CẬP NHẬT
-            userRepository.updatePassword(sessionUser.getEmail(), newPassword);
-
-            // Cập nhật lại mật khẩu trong Session để đồng bộ giao diện
-            sessionUser.setPassword(newPassword);
-            session.setAttribute("loggedInUser", sessionUser);
-
-            model.addAttribute("success", "Đổi mật khẩu thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Lỗi SQL: " + e.getMessage());
-        }
-
-        return "change-password";
-    }
-
-    @GetMapping("/profile")
-    public String showProfile(HttpSession session, Model model) {
-        // Kiểm tra đăng nhập
-        if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login";
-        }
-        // Vì thông tin user đã có sẵn trong Session, Thymeleaf có thể lấy trực tiếp
-        return "profile";
-    }
-
-    // Thêm vào AuthController.java
-
-    @GetMapping("/profile/edit")
-public String showEditProfile(HttpSession session) {
-    if (session.getAttribute("loggedInUser") == null) {
-        return "redirect:/login";
-    }
-    return "edit-profile";
-}
-
-@PostMapping("/profile/edit")
-public String processEditProfile(
-        @RequestParam("firstName") String firstName,
-        @RequestParam("surname") String surname,
-        @RequestParam("shoppingPreference") String shoppingPreference,
-        HttpSession session) {
-    
-    RegisterForm sessionUser = (RegisterForm) session.getAttribute("loggedInUser");
-    if (sessionUser == null) return "redirect:/login";
-
-    try {
-        // 1. Ép SQL Server cập nhật trực tiếp (Bỏ qua mọi lỗi Validation hay Transient của Java)
-        userRepository.updateProfile(firstName, surname, shoppingPreference, sessionUser.getEmail());
-        
-        // 2. TÌM LẠI để làm tươi Session
-        RegisterForm updatedUser = userRepository.findByEmail(sessionUser.getEmail());
-        
-        // 3. Gán lại code từ session cũ sang đối tượng mới (vì code là @Transient nên findByEmail sẽ ra null)
-        if (updatedUser != null) {
-            updatedUser.setCode(sessionUser.getCode());
-            session.setAttribute("loggedInUser", updatedUser);
-        }
-        
-        System.out.println("Cập nhật thành công cho: " + firstName);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    
-    return "redirect:/profile";
-}
 }
