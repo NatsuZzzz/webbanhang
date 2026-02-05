@@ -329,13 +329,29 @@
 
         <main class="product-grid" id="productGrid">
             
-            <div class="promo-card">
-                <img src="/image/image.png" alt="Promo">
-                <div class="promo-text-overlay">
-                    <h2>Sneakers of the Week</h2>
-                    <a href="#" class="btn-shop-promo">Shop On App</a>
-                </div>
-            </div>
+            <div class="product-card" th:each="product : ${products}">
+
+    <!-- ✅ CLICK IMAGE -->
+    <a th:href="@{/product/detail/{id}(id=${product.id})}">
+        <div class="product-img-box">
+            <img th:src="@{${product.imageUrl}}" alt="Product Image">
+        </div>
+    </a>
+
+    <div class="product-info">
+        <h3 th:text="${product.name}"></h3>
+
+        <p th:text="${product.gender} + '\'s ' + ${product.category}">
+        </p>
+
+        <p class="product-price"
+           th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + '₫'">
+        </p>
+    </div>
+
+</div>
+
+            
 
             <div class="product-card" th:each="product : ${products}">
                 <div class="product-img-box">
@@ -358,7 +374,6 @@
 
         </main>
     </div>
-
     <!-- =================================================================== -->
     <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
@@ -435,7 +450,7 @@
         <div class="footer-column">
             <h4>Social</h4>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa  -facebook-f"></i></a>
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
@@ -457,3 +472,5 @@
     <script th:src="@{/image/js/NewArrival.js}"></script>
 </body>
 </html>
+
+<!-- Newwww -->

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/image/icon.png}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/image/css/NewArrival.css}">
-    <title>New Arrivals</title>
+    <link rel="stylesheet" href="/image/css/ProductDetail.css">
+    <title>Product Detail</title>
 </head>
+
 <body>
      <header>
         <div class="top-bar-wrapper">
             <div class="inner-content top-bar-content">
                 <div class="jordan-logo">
-                    <img src="image/jordanIcon.png" alt="Jordan">
+                    <img th:src="@{/image/jordanIcon.png}" alt="Jordan">
                 </div>
                 <div class="top-right-links">
                     <a href="#">Find a Store</a>
@@ -40,7 +41,7 @@
         <nav class="main-nav-wrapper">
             <div class="inner-content">
                 <a href="http://localhost:8080/home" class="nike-logo">
-                    <img src="image/icon.png" alt="Nike">
+                    <img th:src="@{/image/icon.png}" alt="Nike">
                 </a>
 
                 <div class="nav-links">
@@ -52,7 +53,7 @@
                                 <div class="dropdown-column">
                                     <h3>Featured</h3>
                                     <ul>
-                                        <li><a href="#">New Arrivals</a></li>
+                                        <li><a href="http://localhost:8080/new-arrivals">New Arrivals</a></li>
                                         <li><a href="#">Bestsellers</a></li>
                                         <li><a href="#">Shop All Sale</a></li>
                                     </ul>
@@ -256,7 +257,7 @@
                         <input type="text" placeholder="Search">
                     </div>
                     <a href="http://localhost:8080/favorites" class="action-icon"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#" class="action-icon"><i class="fa-solid fa-bag-shopping"></i></a>
+                    <a href="http://localhost:8080/cart" class="action-icon"><i class="fa-solid fa-bag-shopping"></i></a>
                 </div>
             </div>
         </nav>
@@ -272,115 +273,86 @@
         </div>
     </header>
 
-    <div class="page-header">
-        <h1>New (<span th:text="${totalItems}">0</span>)</h1>
-        <div class="header-actions">
-            <span id="btnHideFilter" class="clickable">Hide Filters <i class="fa-solid fa-sliders"></i></span>
-            <span class="clickable">Sort By <i class="fa-solid fa-chevron-down"></i></span>
-        </div>
+<div class="detail-wrapper">
+
+    <!-- ================= LEFT THUMBNAILS ================= -->
+    <div class="thumb-list">
+        <img th:src="@{${product.imageUrl}}" alt="thumb">
+        <img th:src="@{${product.imageUrl}}" alt="thumb">
+        <img th:src="@{${product.imageUrl}}" alt="thumb">
+        <img th:src="@{${product.imageUrl}}" alt="thumb">
     </div>
 
-    <div class="container">
-        <aside class="sidebar" id="mainSidebar">
-            <ul class="category-list">
-                <li>Shoes</li>
-                <li>Tops & T-Shirts</li>
-                <li>Hoodies & Sweatshirts</li>
-                <li>Jackets</li>
-                <li>Trousers & Tights</li>
-            </ul>
-
-            <div class="filter-section">
-    <div class="filter-group">
-        <div class="filter-header">Gender <span class="arrow rotated"><i class="fa-solid fa-chevron-up"></i></span></div>
-        <div class="filter-content collapsed">
-            <label><input type="checkbox"> Men</label>
-            <label><input type="checkbox"> Women</label>
-            <label><input type="checkbox"> Unisex</label>
-        </div>
+    <!-- ================= MAIN IMAGE ================= -->
+    <div class="main-image-box">
+        <img th:src="@{${product.imageUrl}}" alt="Main Product">
     </div>
 
-    <div class="filter-group">
-        <div class="filter-header">Kids <span class="arrow rotated"><i class="fa-solid fa-chevron-up"></i></span></div>
-        <div class="filter-content collapsed">
-            <label><input type="checkbox"> Boys</label>
-            <label><input type="checkbox"> Girls</label>
-        </div>
-    </div>
-
-    <div class="filter-group">
-        <div class="filter-header">Shop By Price <span class="arrow rotated"><i class="fa-solid fa-chevron-up"></i></span></div>
-        <div class="filter-content collapsed">
-            <label><input type="checkbox"> Under 1,000,000₫</label>
-            <label><input type="checkbox"> 1,000,000₫ - 2,000,000₫</label>
-            <label><input type="checkbox"> Over 2,000,000₫</label>
-        </div>
-    </div>
-    <div class="filter-group">
-        <div class="filter-header">Colour <span class="arrow rotated"><i class="fa-solid fa-chevron-up"></i></span></div>
-        <div class="filter-content collapsed">
-            <label><input type="checkbox"> Black</label>
-            <label><input type="checkbox"> White</label>
-            <label><input type="checkbox"> Red</label>
-        </div>
-    </div>
-</div>
-        </aside>
-
-        <main class="product-grid" id="productGrid">
-            
-            <div class="product-card" th:each="product : ${products}">
-
-    <!-- ✅ CLICK IMAGE -->
-    <a th:href="@{/product/detail/{id}(id=${product.id})}">
-        <div class="product-img-box">
-            <img th:src="@{${product.imageUrl}}" alt="Product Image">
-        </div>
-    </a>
-
+    <!-- ================= PRODUCT INFO ================= -->
     <div class="product-info">
-        <h3 th:text="${product.name}"></h3>
 
-        <p th:text="${product.gender} + '\'s ' + ${product.category}">
+        <!-- Name -->
+        <h1 th:text="${product.name}">
+            Nike Structure Plus
+        </h1>
+
+        <!-- Category -->
+        <p th:text="${product.gender} + ' ' + ${product.category}">
+            Giày chạy bộ dành cho nam
         </p>
 
-        <p class="product-price"
-           th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + '₫'">
-        </p>
+        <!-- Price -->
+        <div class="price"
+             th:text="${#numbers.formatDecimal(product.price,0,'POINT',0,'COMMA')} + '₫'">
+            4.699.000₫
+        </div>
+
+        <!-- Color Options -->
+        <div class="color-options">
+            <img th:src="@{${product.imageUrl}}">
+            <img th:src="@{${product.imageUrl}}">
+            <img th:src="@{${product.imageUrl}}">
+            <img th:src="@{${product.imageUrl}}">
+        </div>
+
+        <!-- Buttons -->
+        <button class="btn-gray">Thêm vào yêu thích</button>
+
+        <button class="btn-black">
+            Mua ngay
+        </button>
+
+        <!-- Product Details -->
+        <ul>
+            <li>Màu sắc hiển thị: Đen / Trắng / Đỏ</li>
+            <li>Mã sản phẩm: HQ3048-500</li>
+            <li>Xuất xứ: Việt Nam</li>
+        </ul>
+
+        <span class="detail-link">
+            Xem chi tiết sản phẩm
+        </span>
+
+        <h3 style="margin-top:30px;">
+            Giao hàng và đổi trả miễn phí ⌄
+        </h3>
+
+        <!-- Back -->
+        <a href="/new-arrivals" class="back-btn">
+            ⬅ Quay lại New Arrivals
+        </a>
+
     </div>
 
 </div>
 
-            
-
-            <div class="product-card" th:each="product : ${products}">
-                <div class="product-img-box">
-                    <img th:src="@{${product.imageUrl}}" alt="Product Image">
-                </div>
-                
-                <div class="product-info">
-                    <div class="tag-just-in" th:if="${product.isFeatured}">Just In</div>
-                    
-                    <h3 class="product-name" th:text="${product.name}">Nike Air Force 1</h3>
-                    
-                    <p class="product-category" th:text="${product.gender} + '\'s ' + ${product.category}">Women's Shoes</p>
-                    
-                    <p class="product-price" 
-                       th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + '₫'">
-                       3,519,000₫
-                    </p>
-                </div>
-            </div>
-
-        </main>
-    </div>
-    <!-- =================================================================== -->
+<!-- =================================================================== -->
     <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-overlay-content">
             <div class="search-top-bar">
                 <a href="#" class="overlay-logo">
-                    <img src="image/icon.png" alt="Nike">
+                    <img th:src="@{/image/icon.png}" alt="Nike">
                 </a>
 
                 <div class="big-search-container">
@@ -450,7 +422,7 @@
         <div class="footer-column">
             <h4>Social</h4>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa  -facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
@@ -469,8 +441,7 @@
         </div>
     </div>
 </footer>
-    <script th:src="@{/image/js/NewArrival.js}"></script>
+<script th:src="@{/image/js/ProductDetail.js}"></script>
+
 </body>
 </html>
-
-<!-- Newwww -->
