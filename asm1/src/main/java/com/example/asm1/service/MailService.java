@@ -28,14 +28,14 @@ public class MailService {
             // set "true" để hỗ trợ multipart (đính kèm file) và encoding UTF-8
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom("phamkhoi2746@gmail.com"); // Tốt nhất nên cấu hình trong application.properties
+            helper.setFrom("aztunguyenaz@gmail.com"); // Tốt nhất nên cấu hình trong application.properties
             helper.setTo(toEmail);
-            helper.setSubject("Mã xác nhận đăng ký Nike Member");
+            helper.setSubject("Mã xác nhận đăng ký Food Member");
 
             // Nội dung email dạng HTML chuyên nghiệp
             String htmlContent = """
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-                    <h2 style="color: #111; text-align: center;">Xác thực tài khoản Nike Member</h2>
+                    <h2 style="color: #111; text-align: center;">Xác thực tài khoản Food Member</h2>
                     <p>Xin chào,</p>
                     <p>Cảm ơn bạn đã quan tâm đến sản phẩm của chúng tôi. Đây là mã xác thực (OTP) để hoàn tất đăng ký:</p>
                     
@@ -50,8 +50,8 @@ public class MailService {
                     
                     <div style="margin-top: 20px; font-size: 13px; color: #666;">
                         <p>Trân trọng,</p>
-                        <p><strong>Đội ngũ Hỗ trợ Nike Việt Nam</strong><br>
-                        Email: support@nike.com<br>
+                        <p><strong>Đội ngũ Hỗ trợ Food Member</strong><br>
+                        Email: support@foodmember.com<br>
                         Hotline: 1900 xxxx</p>
                         <p style="font-style: italic; font-size: 11px;">Đây là email tự động, vui lòng không trả lời email này.</p>
                     </div>
