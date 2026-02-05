@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Danh mục sản phẩm</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+  <div class="flex px-10 py-8 gap-8">
+
+    <!-- ===== FILTER SIDEBAR ===== -->
+    <aside class="w-64 bg-white p-6 rounded-xl border space-y-6">
+
+      <form th:action="@{/list/products}" method="get" class="space-y-6">
+        <!-- DANH MỤC -->
+        <div>
+          <h2 class="font-bold text-red-600 mb-2">Danh mục</h2>
+
+          <select name="categoryId" class="w-full border rounded px-3 py-2">
+            <option value="">-- Tất cả --</option>
+
+            <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"
+              th:selected="${c.id == categoryId}">
+            </option>
+          </select>
+        </div>
+
+        <!-- GIÁ -->
+        <div>
+          <h2 class="font-bold text-red-600 mb-2">Khoảng giá</h2>
+
+          <input type="number" name="minPrice" placeholder="Từ" class="w-full mb-2 border rounded px-3 py-1"
+            th:value="${minPrice}" />
+
+          <input type="number" name="maxPrice" placeholder="Đến" class="w-full border rounded px-3 py-1"
+            th:value="${maxPrice}" />
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded font-bold">
+          Lọc
+        </button>
+
+        <a th:href="@{/list/products}" class="block text-center w-full border py-2 rounded">
+          Reset
+        </a>
+
+
+      </form>
+    </aside>
+
+    <!-- ===== PRODUCT LIST ===== -->
+    <main class="flex-1">
+
+      <h1 class="text-3xl font-black mb-6">Danh sách món ăn</h1>
+
+      <!-- KHÔNG CÓ SẢN PHẨM -->
+      <div th:if="${#lists.isEmpty(products)}" class="text-gray-400">
+        😢 Không có sản phẩm phù hợp
+      </div>
+      <p th:text="'Số sản phẩm: ' + ${#lists.size(products)}"></p>
+      <!-- GRID SẢN PHẨM -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6" th:if="${!#lists.isEmpty(products)}">
+
+        <div th:each="p : ${products}" class="bg-white p-5 rounded-xl shadow">
+
+          <img th:if="${p.imageUrl != null}" th:src="@{${p.imageUrl}}" class="w-full h-40 object-cover rounded mb-3" />
+
+          <h3 class="font-bold text-lg" th:text="${p.name}"></h3>
+
+          <p class="text-red-600 font-black"
+            th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' đ'">
+          </p>
+
+          <p class="text-sm text-gray-500 mb-4" th:text="${p.description}">
+          </p>
+
+          <a th:href="@{'/product/detail/' + ${p.id}}" class="block text-center bg-red-600 text-white py-2 rounded">
+            Xem chi tiết
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+</body>
+
+</html>

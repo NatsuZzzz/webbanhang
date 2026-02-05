@@ -1,7 +1,11 @@
 package com.example.asm1.controller;
 
+import com.example.asm1.Entity.Category;
 import com.example.asm1.Entity.Product;
 import com.example.asm1.repository.ProductRepository;
+import com.example.asm1.service.CategoryService;
+import com.example.asm1.service.ProductService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,41 +13,54 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
-@RequestMapping("/")
+@RequestMapping("/list")
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     // ✅ Trang danh sách sản phẩm
-    @GetMapping("/new-arrivals")
-    public String showNewArrivalsPage(Model model) {
+    @GetMapping("/products")
+    public String showProducts(
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            Model model) {
 
-        List<Product> listProducts = productRepository.findAll();
+        List<Product> products = productService
+                .filterProducts(categoryId, minPrice, maxPrice);
+        List<Category> categories = categoryService.findAll();
 
-        model.addAttribute("products", listProducts);
-        model.addAttribute("totalItems", listProducts.size());
+        model.addAttribute("categories", categories);
+        System.out.println("👉 Products size = " + products.size());
+        model.addAttribute("products", products);
+        model.addAttribute("totalItems", products.size());
 
-        return "NewArrival";
+        // giữ lại giá trị lọc để frontend check lại checkbox
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+
+        return "Product";
     }
 
     // ✅ Trang chi tiết sản phẩm
     @GetMapping("/product/detail/{id}")
-    public String showProductDetail(@PathVariable("id") Integer id, Model model) {
+    public String showProductDetail(@PathVariable Integer id, Model model) {
 
-        // 1. Tìm sản phẩm theo ID
-        Product product = productRepository.findById(id).orElse(null);
+        Product product = productService.getProductById(id);
 
-        // 2. Nếu không tìm thấy → quay về trang list
         if (product == null) {
-            return "redirect:/new-arrivals";
+            return "redirect:/list/products";
         }
 
-        // 3. Gửi sản phẩm sang HTML
         model.addAttribute("product", product);
-
-        // 4. Trả về trang chi tiết
         return "ProductDetail";
     }
+
 }

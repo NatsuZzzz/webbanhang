@@ -1,65 +1,39 @@
 package com.example.asm1.Entity;
 
+import com.example.asm1.Entity.*;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "Products")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name; //
-    private String category; //
-    private Double price; //
-    private String gender; // 
-    
+    private String name;
+
+    private Double price;
+
     @Column(name = "image_url")
-    private String imageUrl; // Đây chính là biến để thay đường dẫn ảnh
+    private String imageUrl;
 
-    @Column(name = "is_featured")
-    private Boolean isFeatured;
+    private String description;
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public Double getPrice() {
-        return price;
-    }
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public Boolean getIsFeatured() {
-        return isFeatured;
-    }
-    public void setIsFeatured(Boolean isFeatured) {
-        this.isFeatured = isFeatured;
-    }
-    public String getGender() {
-        return gender;
-    }
+    @Column(name = "is_available")
+    private Boolean isAvailable;
 
+    // ===== QUAN HỆ CATEGORY =====
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    // getter / setter
 }
