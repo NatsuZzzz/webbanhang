@@ -8,6 +8,9 @@
     <title>Nike - Danh sách yêu thích</title>
 </head>
 <body>
+        <!-- header -->
+        <div th:replace="fragments/header :: header"></div>
+
     <header>
         <div class="top-bar-wrapper">
             <div class="inner-content top-bar-content">
@@ -313,6 +316,10 @@
             <p class="empty-state-message">Các sản phẩm bạn yêu thích sẽ được lưu tại đây.</p>
         </div>
     </main>
+
+
+      <!-- footerfooter -->
+      <div th:replace="fragments/footer :: footer"></div>
 
     <script src="/image/js/Favorite.js"></script>
 </body>
