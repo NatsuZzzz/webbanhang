@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title th:text="${product.name} + ' | Fast Food'"></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 
 <body>
@@ -247,6 +248,7 @@
 
  <!-- footerfooter -->
  <div th:replace="fragments/footer :: footer"></div>
+ <script th:src="@{/js/index.js}"></script>
 </body>
 
 </html>
