@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header th:fragment="header">
+    <div class="top-bar-wrapper">
+        <div class="inner-content top-bar-content">
+            <div class="nike-logo">
+                <img th:src="@{/image/logojoli.png}" alt="logo jolibee">
+            </div>
+
+    <!-- MENU -->
+    <ul class="main-menu">
+        <li class="menu-item active">
+            <a th:href="@{/home}">TRANG CHỦ</a>
+        </li>
+        <li class="menu-item">
+            <a th:href="@{/menu}">THỰC ĐƠN</a>
+        </li>
+        <li class="menu-item">
+            <a th:href="@{/promotion}">KHUYẾN MÃI</a>
+        </li>
+        <li class="menu-item">
+            <a th:href="@{/service}">DỊCH VỤ</a>
+        </li>
+        <li class="menu-item">
+            <a th:href="@{/contact}">LIÊN HỆ</a>
+        </li>
+    </ul>
+
+
+            <div class="top-right-links">
+                <a href="#">Tìm cửa hàng</a>
+                <span>|</span>
+                <a href="#">Trợ giúp</a>
+                <span>|</span>
+
+                <th:block th:if="${session.loggedInUser == null}">
+                    <a th:href="@{/login}">Đăng nhập</a>
+                    <span>|</span>
+                    <a th:href="@{/checkMail}">Tham gia</a>
+                </th:block>
+
+                <th:block th:unless="${session.loggedInUser == null}">
+                    <div class="user-dropdown">
+                        <div class="user-name-wrapper">
+                            Chào, <span th:text="${session.loggedInUser.firstName}">Thành viên</span>
+                            <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="dropdown-content">
+                            <a th:href="@{/profile}">Chi tiết hồ sơ</a>
+                            <hr>
+                            <a th:href="@{/change-password}">Đổi mật khẩu</a>
+                            <hr>
+                            <a th:href="@{/logout}" style="color:#d43f3a">Đăng xuất</a>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+
+
+</header>
+
+</body>
+</html>

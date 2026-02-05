@@ -1,174 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <title>Nike. Just Do It. Nike VN</title>
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/image/icon.png}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/image/css/index.css}">
 </head>
 
 <body>
-
-    <header>
-        <div class="top-bar-wrapper">
-            <div class="inner-content top-bar-content">
-                <div class="jordan-logo">
-                    <img src="image/jordanIcon.png" alt="Jordan">
-                </div>
-                <div class="top-right-links">
-                    <a href="#">Tìm cửa hàng</a>
-                    <span>|</span>
-                    <a href="#">Trợ giúp</a>
-                    <span>|</span>
-
-                    <th:block th:if="${session.loggedInUser == null}">
-                        <a href="http://localhost:8080/login">Đăng nhập</a>
-                        <span>|</span>
-                        <a th:href="@{/checkMail}">Tham gia</a>
-                    </th:block>
-
-                    <th:block th:unless="${session.loggedInUser == null}">
-                        <div class="user-dropdown">
-                            <div class="user-name-wrapper">
-                                Chào, <span th:text="${session.loggedInUser.firstName}">Thành viên</span>
-                                <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                            </div>
-                            <div class="dropdown-content">
-                                <a th:href="@{/profile}">Chi tiết hồ sơ</a>
-                                <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 0;">
-                                <a th:href="@{/change-password}">Đổi mật khẩu</a>
-                                <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 0;">
-                                <a th:href="@{/logout}" style="color: #d43f3a !important;">Đăng xuất</a>
-                            </div>
-                        </div>
-                    </th:block>
-                </div>
-            </div>
-        </div>
-
-        <nav class="main-nav-wrapper">
-            <div class="inner-content">
-                <a href="http://localhost:8080/home" class="nike-logo">
-                    <img src="image/icon.png" alt="Nike">
-                </a>
-
-                <div class="nav-links">
-
-                    <div class="nav-item">
-                        <a href="#">Mới & Nổi bật</a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-inner">
-                                <div class="dropdown-column">
-                                    <h3>Nổi bật</h3>
-                                    <ul>
-                                        <li><a href="http://localhost:8080/new-arrivals">Hàng mới về</a></li>
-                                        <li><a href="#">Sản phẩm bán chạy</a></li>
-                                        <li><a href="#">Xem tất cả giảm giá</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Biểu tượng</h3>
-                                    <ul>
-                                        <li><a href="#">Air Force 1</a></li>
-                                        <li><a href="#">Air Jordan 1</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Xu hướng</h3>
-                                    <ul>
-                                        <li><a href="#">Cửa hàng thể thao</a></li>
-                                        <li><a href="#">Adidas vs Nike</a></li>
-                                        <li><a href="#">Chạy bộ Retro</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nav-item">
-                        <a href="#">Nam</a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-inner">
-                                <div class="dropdown-column">
-                                    <h3>Nổi bật</h3>
-                                    <ul>
-                                        <li><a href="#">Hàng mới về</a></li>
-                                        <li><a href="#">Sản phẩm bán chạy</a></li>
-                                        <li><a href="#">Xem tất cả giảm giá</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Giày</h3>
-                                    <ul>
-                                        <li><a href="#">Tất cả giày</a></li>
-                                        <li><a href="#">Thời trang đời sống</a></li>
-                                        <li><a href="#">Jordan</a></li>
-                                        <li><a href="#">Chạy bộ</a></li>
-                                        <li><a href="#">Bóng rổ</a></li>
-                                        <li><a href="#">Bóng đá</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Quần áo</h3>
-                                    <ul>
-                                        <li><a href="#">Tất cả quần áo</a></li>
-                                        <li><a href="#">Áo thun</a></li>
-                                        <li><a href="#">Quần Short</a></li>
-                                        <li><a href="#">Áo Hoodie & Áo nỉ</a></li>
-                                        <li><a href="#">Quần dài & Leggings</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Phụ kiện</h3>
-                                    <ul>
-                                        <li><a href="#">Tất cả phụ kiện</a></li>
-                                        <li><a href="#">Túi & Balo</a></li>
-                                        <li><a href="#">Tất (Vớ)</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nav-item"><a href="#">Nữ</a></div>
-                    <div class="nav-item"><a href="#">Trẻ em</a></div>
-                    <div class="nav-item"><a href="#">Giảm giá</a></div>
-
-                </div>
-                <div class="nav-backdrop"></div>
-
-                <div class="nav-actions">
-                    <div class="search-container">
-                        <i class="fa-solid fa-magnifying-glass search-icon-btn"></i>
-                        <input type="text" placeholder="Tìm kiếm">
-                    </div>
-                    <a href="http://localhost:8080/favorites" class="action-icon"><i class="fa-regular fa-heart"></i></a>
-                    <a href="http://localhost:8080/cart" class="action-icon"><i class="fa-solid fa-bag-shopping"></i></a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="promo-bar-wrapper">
-            <div class="inner-content promo-content" style="display: block;">
-                <div class="promo-text">Giao hàng tiêu chuẩn miễn phí & Đổi trả miễn phí trong 30 ngày</div>
-                <div class="promo-subtext">
-                    <a href="#">Tham gia ngay</a>
-                    <a href="#">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    <!-- header -->
+    <div th:replace="fragments/header :: header"></div>
+<!-- centercenter -->
     <section class="hero-slider">
         <div class="slide active">
             <video muted playsinline class="bg-video">
                 <source src="video/video1.mp4" type="video/mp4">
             </video>
             <div class="hero-content">
-                <h1>Air Max Mới</h1>
-                <h1>2026 Sắp ra mắt</h1>
+                <h1>Đồ Ăn Tươi Mới</h1>
+                <h1>Thơm Ngon</h1>
                 <br>
                 <div class="hero-actions">
                     <button class="btn-notify">Mua ngay</button>
@@ -182,9 +32,9 @@
             </video>
             <div class="hero-content">
                 <div class="hero-actions">
-                    <h1>Air Jordan 1</h1>
+                    <h1>Bùng Nổ Vị Giác</h1>
                     <br>
-                    <button class="btn-notify">Thông báo cho tôi</button>
+                    <button class="btn-notify">Đặt Ngay</button>
                 </div>
             </div>
         </div>
@@ -204,114 +54,44 @@
 
     <section class="featured-section inner-content">
         <div class="featured-item">
-            <img src="image/Golf.png" alt="Nike Golf">
+            <img src="image/ga1.webp" alt="ga gion">
             <div class="item-overlay">
-                <p class="category">Nike Golf</p>
-                <h3 class="item-title">Thiết kế để chiến thắng</h3>
-                <a href="#" class="btn-shop">Mua ngay</a>
+                <p class="category">Gà Giòn Vui Vẻ</p>
+                <h3 class="item-title">Giòn, Thơm Ngon</h3>
+                <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
         <div class="featured-item">
-            <img src="image/Just do it.png" alt="Nike Tennis">
+            <img src="image/ga2.webp" alt="ga cay">
             <div class="item-overlay">
-                <p class="category">Bộ sưu tập Nike Tennis Surf Symphony</p>
+                <p class="category">Gà Sốt Cay</p>
                 <h3 class="item-title">Sẵn sàng để bùng nổ</h3>
-                <a href="#" class="btn-shop">Mua ngay</a>
+                <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
         <div class="featured-item">
-            <img src="image/Shoes.png" alt="Nike Shox">
+            <img src="image/my1.webp" alt="my y">
             <div class="item-overlay">
-                <p class="category">Nike Shox</p>
-                <a href="#" class="btn-shop">Mua ngay</a>
+                <p class="category">Mỳ Ý Sốt Bò Bầm</p>
+                <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
         <div class="featured-item">
-            <img src="image/UnderShoes.png" alt="ACG Ultrafly">
+            <img src="image/kem1.webp" alt="kem lanh">
             <div class="item-overlay">
-                <p class="category">ACG Ultrafly</p>
-                <h3 class="item-title">Tốc độ vượt trội</h3>
-                <a href="#" class="btn-shop">Khám phá</a>
+                <p class="category">Món Tráng Miệng</p>
+                <h3 class="item-title">Mát Lạnh</h3>
+                <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
     </section>
 
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-overlay-content">
-            <div class="search-top-bar">
-                <a href="#" class="overlay-logo">
-                    <img src="image/icon.png" alt="Nike">
-                </a>
-                <div class="big-search-container">
-                    <i class="fa-solid fa-magnifying-glass search-icon-big"></i>
-                    <input type="text" placeholder="Tìm kiếm" id="bigSearchInput">
-                </div>
-                <button class="btn-cancel" onclick="closeSearch()">Hủy</button>
-            </div>
-            <div class="search-suggestions">
-                <p class="suggestion-title">Từ khóa tìm kiếm phổ biến</p>
-                <div class="tags-container">
-                    <a href="#" class="search-tag">luka 5</a>
-                    <a href="#" class="search-tag">air force 1</a>
-                    <a href="#" class="search-tag">jordan</a>
-                    <a href="#" class="search-tag">air max</a>
-                </div>
-            </div>
-        </div>
-        <div class="overlay-backdrop" onclick="closeSearch()"></div>
-    </div>
+ 
 
-    <footer class="nike-footer">
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Tìm cửa hàng</h4>
-                <ul>
-                    <li><a href="#">Trở thành thành viên</a></li>
-                    <li><a href="#">Đăng ký nhận email</a></li>
-                    <li><a href="#">Gửi phản hồi</a></li>
-                    <li><a href="#">Giảm giá sinh viên</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Hỗ trợ</h4>
-                <ul>
-                    <li><a href="#">Tình trạng đơn hàng</a></li>
-                    <li><a href="#">Giao hàng</a></li>
-                    <li><a href="#">Đổi trả</a></li>
-                    <li><a href="#">Thanh toán</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Về Nike</h4>
-                <ul>
-                    <li><a href="#">Tin tức</a></li>
-                    <li><a href="#">Tuyển dụng</a></li>
-                    <li><a href="#">Nhà đầu tư</a></li>
-                    <li><a href="#">Bền vững</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Mạng xã hội</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2026 Nike, Inc. Bảo lưu mọi quyền</span>
-            <div class="footer-links">
-                <a href="#">Hướng dẫn</a>
-                <a href="#">Điều khoản bán hàng</a>
-                <a href="#">Điều khoản sử dụng</a>
-                <a href="#">Chính sách bảo mật</a>
-            </div>
-        </div>
-    </footer>
 
-    <script src="/image/js/index.js"></script>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+<script src="/image/js/index.js"></script>
 </body>
 </html>

@@ -1,4 +1,160 @@
 /* --- 1. GLOBAL & RESET --- */
+/* xóa khoảng trắngtrắng */
+
+
+/* header csscss */
+
+/* ================= HEADER ================= */
+
+/* Wrapper tổng */
+.main-nav-wrapper {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Container căn giữa */
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* ================= LOGO ================= */
+.nike-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nike-logo img {
+    height: 34px;        /* chỉnh 36–56px tuỳ ý */
+    width: auto;
+    display: block;
+}
+
+/* ================= MENU ================= */
+.main-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* item */
+.main-menu .menu-item a {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    color: #111111;      /* chữ đen dễ nhìn */
+    padding: 10px 14px;
+    border-radius: 20px;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+/* hover */
+.main-menu .menu-item a:hover {
+    background-color: #f5f5f5;
+}
+
+/* active */
+.main-menu .menu-item.active a {
+    background-color: #111111;
+    color: #ffffff;
+}
+
+/* ================= TOP BAR (NẾU CÓ) ================= */
+.top-bar-wrapper {
+    background-color: #f7f7f7;
+    font-size: 13px;
+}
+
+.top-bar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-right-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.top-right-links a:hover {
+    text-decoration: underline;
+}
+
+/* ================= DROPDOWN USER ================= */
+.user-dropdown {
+    position: relative;
+}
+
+.user-name-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 999;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #f5f5f5;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ACTIVE */
+.menu-item.active a {
+    background-color: #ffffff;
+    color: #e31837;
+}
+
+
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -75,10 +231,7 @@ img {
     position: relative;
 }
 
-.nike-logo img {
-    width: 60px;
-    height: auto;
-}
+
 
 /* === NAV LINKS (MENU CHÍNH) === */
 .nav-links {
@@ -583,7 +736,7 @@ img {
     position: absolute;
     bottom: 40px;
     left: 40px;
-    color: #fff;
+    color: #080808;
     z-index: 2;
 }
 
