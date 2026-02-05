@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <title>Giỏ hàng</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+
 </head>
 <body class="bg-gray-100 min-h-screen">
+
+      <!-- header -->
+      <div th:replace="fragments/header :: header"></div>
 
     <div class="max-w-6xl mx-auto px-6 py-10">
 
@@ -62,7 +67,9 @@
 
     </div>
 
+    <div th:replace="fragments/footer :: footer"></div>
 
+    <script th:src="@{/js/index.js}"></script>
 </body>
 
 </html>

@@ -5,6 +5,7 @@ com\example\asm1\controller\CartController.class
 com\example\asm1\repository\UserRepository.class
 com\example\asm1\service\MailService.class
 com\example\asm1\Asm1Application.class
+com\example\asm1\model\CartItem.class
 com\example\asm1\controller\CheckMailController.class
 com\example\asm1\controller\AuthController.class
 com\example\asm1\Entity\RegisterForm.class
