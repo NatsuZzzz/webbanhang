@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nike - Sign In</title>
+    <title>Nike - Đăng nhập</title>
     <link rel="icon" type="image/png" th:href="@{/image/icon.png}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -28,28 +28,28 @@
         <div class="logo-box">
             <img src="/image/icon.png" alt="Nike Logo">
         </div>
-        <h1>Enter your email and password to sign in.</h1>
+        <h1>Nhập email và mật khẩu của bạn để đăng nhập.</h1>
 
         <div th:if="${error}" class="error-msg" th:text="${error}"></div>
         <div th:if="${success}" class="error-msg" style="color: green;" th:text="${success}"></div>
 
         <form th:action="@{/login}" method="POST">
             <div class="form-group">
-                <input type="email" name="email" placeholder="Email Address*" required>
+                <input type="email" name="email" placeholder="Địa chỉ Email*" required>
             </div>
             <div class="form-group">
-                <input type="password" name="password" placeholder="Password*" required>
+                <input type="password" name="password" placeholder="Mật khẩu*" required>
             </div>
             
             <p class="footer-links" style="text-align: left; margin-bottom: 20px;">
-                By logging in, you agree to Nike's <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.
+                Bằng cách đăng nhập, bạn đồng ý với <a href="#">Chính sách Bảo mật</a> và <a href="#">Điều khoản Sử dụng</a> của Nike.
             </p>
 
-            <button type="submit" class="btn-login">Sign In</button>
+            <button type="submit" class="btn-login">Đăng nhập</button>
         </form>
 
         <p class="footer-links">
-            Not a Member? <a th:href="@{/checkMail}">Join Us.</a>
+            Chưa là Thành viên? <a th:href="@{/checkMail}">Tham gia với chúng tôi.</a>
         </p>
     </div>
 </body>

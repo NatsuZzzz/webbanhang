@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Us - Nike Member Profile</title>
+    <title>Tham gia với chúng tôi - Hồ sơ thành viên Nike</title>
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/image/icon.png}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -28,8 +28,8 @@
         input:focus, select:focus { border-color: #111; }
 
         /* ERROR STYLES */
-        .input-error { border-color: #d43f3a !important; } /* Viền đỏ khi lỗi */
-        .error-text { color: #d43f3a; font-size: 12px; margin-top: 5px; } /* Chữ đỏ */
+        .input-error { border-color: #d43f3a !important; }
+        .error-text { color: #d43f3a; font-size: 12px; margin-top: 5px; }
         
         .row-double { display: flex; gap: 16px; }
         .row-double .form-group { flex: 1; }
@@ -64,12 +64,12 @@
         </div>
 
         <div class="header-text">
-            <h1>Now let's make you a Nike Member.</h1>
+            <h1>Bây giờ, hãy để chúng tôi giúp bạn trở thành Thành viên Nike.</h1>
             <p class="sub-text">
-                We've sent a code to <br> 
-                <strong th:text="${registerForm.email != null} ? ${registerForm.email} : 'your-email@gmail.com'">
+                Chúng tôi đã gửi một mã xác nhận đến <br> 
+                <strong th:text="${registerForm.email != null} ? ${registerForm.email} : 'email-cua-ban@gmail.com'">
                 </strong> 
-                <a th:href="@{/checkMail}">Edit</a>
+                <a th:href="@{/checkMail}">Chỉnh sửa</a>
             </p>
         </div>
 
@@ -78,26 +78,26 @@
             <input type="hidden" th:field="*{email}">
 
             <div class="form-group">
-                <input type="text" placeholder="Code*" 
+                <input type="text" placeholder="Mã xác nhận*" 
                        th:field="*{code}"
                        th:classappend="${#fields.hasErrors('code')} ? 'input-error' : ''">
                 
                 <div class="error-text" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
                 
                 <div class="helper-text">
-                    <span></span> <span>Resend code in 8s</span>
+                    <span></span> <span>Gửi lại mã sau 8 giây</span>
                 </div>
             </div>
 
             <div class="row-double">
                 <div class="form-group">
-                    <input type="text" placeholder="First Name*" 
+                    <input type="text" placeholder="Tên*" 
                            th:field="*{firstName}"
                            th:classappend="${#fields.hasErrors('firstName')} ? 'input-error' : ''">
                     <div class="error-text" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Surname*" 
+                    <input type="text" placeholder="Họ*" 
                            th:field="*{surname}"
                            th:classappend="${#fields.hasErrors('surname')} ? 'input-error' : ''">
                     <div class="error-text" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
@@ -105,7 +105,7 @@
             </div>
 
             <div class="form-group">
-                <input type="password" id="password" placeholder="Password*"
+                <input type="password" id="password" placeholder="Mật khẩu*"
                        th:field="*{password}"
                        th:classappend="${#fields.hasErrors('password')} ? 'input-error' : ''">
                 <i class="fa-regular fa-eye password-toggle" onclick="togglePassword()"></i>
@@ -113,45 +113,45 @@
                 <div class="error-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 
                 <div class="helper-text">
-                    <span style="display: block; width: 100%;">× Minimum of 8 characters</span>
+                    <span style="display: block; width: 100%;">× Tối thiểu 8 ký tự</span>
                 </div>
                 <div class="helper-text">
-                    <span>× Uppercase, lowercase letters and one number</span>
+                    <span>× Chữ hoa, chữ thường và ít nhất một chữ số</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <select th:field="*{shoppingPreference}" 
                         th:classappend="${#fields.hasErrors('shoppingPreference')} ? 'input-error' : ''">
-                    <option value="" disabled selected>Shopping Preference*</option>
-                    <option value="men">Men's</option>
-                    <option value="women">Women's</option>
+                    <option value="" disabled selected>Ưu tiên mua sắm cho*</option>
+                    <option value="men">Nam</option>
+                    <option value="women">Nữ</option>
                 </select>
                 <div class="error-text" th:if="${#fields.hasErrors('shoppingPreference')}" th:errors="*{shoppingPreference}"></div>
             </div>
 
-            <div class="dob-label">Date of Birth</div>
+            <div class="dob-label">Ngày sinh</div>
             <div class="dob-container">
-                <input type="text" placeholder="Day*" th:field="*{dobDay}" th:classappend="${#fields.hasErrors('dobDay')} ? 'input-error' : ''">
-                <input type="text" placeholder="Month*" th:field="*{dobMonth}" th:classappend="${#fields.hasErrors('dobMonth')} ? 'input-error' : ''">
-                <input type="text" placeholder="Year*" th:field="*{dobYear}" th:classappend="${#fields.hasErrors('dobYear')} ? 'input-error' : ''">
+                <input type="text" placeholder="Ngày*" th:field="*{dobDay}" th:classappend="${#fields.hasErrors('dobDay')} ? 'input-error' : ''">
+                <input type="text" placeholder="Tháng*" th:field="*{dobMonth}" th:classappend="${#fields.hasErrors('dobMonth')} ? 'input-error' : ''">
+                <input type="text" placeholder="Năm*" th:field="*{dobYear}" th:classappend="${#fields.hasErrors('dobYear')} ? 'input-error' : ''">
             </div>
-            <div class="error-text" th:if="${#fields.hasErrors('dobDay')}" th:text="'Date required'"></div>
+            <div class="error-text" th:if="${#fields.hasErrors('dobDay')}" th:text="'Vui lòng nhập ngày sinh'"></div>
             
-            <p class="dob-note">Get a Nike Member Reward on your birthday.</p>
+            <p class="dob-note">Nhận Phần thưởng Thành viên Nike vào ngày sinh nhật của bạn.</p>
 
             <div class="checkbox-group">
                 <input type="checkbox" id="signup-email" th:field="*{emailSignup}">
-                <label for="signup-email">Sign up for emails to get updates from Nike on products, offers and your Member benefits.</label>
+                <label for="signup-email">Đăng ký nhận email để cập nhật thông tin về sản phẩm, ưu đãi và quyền lợi Thành viên từ Nike.</label>
             </div>
 
             <div class="checkbox-group">
                 <input type="checkbox" id="terms" th:field="*{agreeTerms}">
-                <label for="terms">I agree to Nike's <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</label>
+                <label for="terms">Tôi đồng ý với <a href="#">Chính sách Bảo mật</a> và <a href="#">Điều khoản Sử dụng</a> của Nike.</label>
             </div>
             <div class="error-text" th:if="${#fields.hasErrors('agreeTerms')}" th:errors="*{agreeTerms}"></div>
 
-            <button type="submit" class="btn-submit">Create Account</button>
+            <button type="submit" class="btn-submit">Tạo tài khoản</button>
 
         </form>
     </div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ sơ Thành viên - Nike</title>
+    <link rel="stylesheet" th:href="@{/image/css/style.css}">
+</head>
+
+<body>
+    <div class="container" th:object="${session.loggedInUser}">
+        <div class="header"><img th:src="@{/image/icon.png}" alt="Nike"></div>
+        <h1>Hồ sơ Thành viên</h1>
+        
+        <div class="info-group">
+            <div class="label">Địa chỉ Email</div>
+            <div class="value" th:text="*{email}"></div>
+        </div>
+        
+        <div class="info-group">
+            <div class="label">Họ và Tên</div>
+            <div class="value" th:text="*{firstName} + ' ' + *{surname}"></div>
+        </div>
+        
+        <div class="info-group">
+            <div class="label">Ngày sinh</div>
+            <div class="value" th:text="*{dobDay} + '/' + *{dobMonth} + '/' + *{dobYear}"></div>
+        </div>
+        
+        <div class="info-group">
+            <div class="label">Ưu tiên mua sắm</div>
+            <div class="value" th:text="*{shoppingPreference == 'men' ? 'Nam' : (shoppingPreference == 'women' ? 'Nữ' : shoppingPreference)}"></div>
+        </div>
+        
+        <a href="/home" class="btn-black">Quay lại mua sắm</a>
+        
+        <div class="sub-link-wrapper">
+            <a th:href="@{/profile/edit}" class="sub-link">Chỉnh sửa hồ sơ</a>
+        </div>
+    </div>
+</body>
+
+</html>

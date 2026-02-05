@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/image/icon.png}">
-    <title>Nike Login - Enter Email</title>
+    <title>Đăng nhập Nike - Nhập Email</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -54,35 +54,35 @@
         </div>
 
         <div class="login-title">
-            Enter your email to join us or sign in.
+            Nhập email của bạn để tham gia hoặc đăng nhập.
         </div>
 
         <div class="country-section">
-            Vietnam <a href="#">Change</a>
+            Việt Nam <a href="#">Thay đổi</a>
         </div>
 
         <form th:action="@{/login/check-email}" th:object="${ChangeMail}" method="POST">
 
-    <div th:if="${errorMessage}" style="background: yellow; color: red; padding: 5px; margin-bottom: 10px; border: 1px solid red;">
-        DEBUG: <span th:text="${errorMessage}"></span>
-    </div>
+            <div th:if="${errorMessage}" style="background: #fff3cd; color: #856404; padding: 10px; margin-bottom: 10px; border: 1px solid #ffeeba; font-size: 13px;">
+                Gỡ lỗi: <span th:text="${errorMessage}"></span>
+            </div>
 
-    <div class="form-group">
-        <div class="input-wrapper">
-            <input type="text" placeholder="Email*" th:field="*{email}"
-                   th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''"
-                   th:style="${errorMessage != null} ? 'border-color: #d43f3a !important;' : ''">
-        </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Email*" th:field="*{email}"
+                           th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''"
+                           th:style="${errorMessage != null} ? 'border-color: #d43f3a !important;' : ''">
+                </div>
 
-        <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-        
-        <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-    </div>
+                <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                
+                <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+            </div>
 
-    <div class="btn-container">
-        <button type="submit" class="btn-continue">Continue</button>
-    </div>
-</form>
+            <div class="btn-container">
+                <button type="submit" class="btn-continue">Tiếp tục</button>
+            </div>
+        </form>
     </div>
 
 </body>

@@ -39,9 +39,9 @@ public class AuthController {
     // 2. POST: Xử lý đăng ký (Lưu vào SQL Server và Redirect sang Login)
     @PostMapping("/register")
     public String processRegister(@Valid @ModelAttribute("registerForm") RegisterForm registerForm,
-                                  BindingResult bindingResult,
-                                  HttpSession session,
-                                  Model model) {
+            BindingResult bindingResult,
+            HttpSession session,
+            Model model) {
 
         // --- BƯỚC 1: KIỂM TRA LỖI VALIDATION ---
         if (bindingResult.hasErrors()) {
@@ -60,16 +60,16 @@ public class AuthController {
         // --- BƯỚC 3: LƯU DATABASE ---
         try {
             // Lưu người dùng vào SQL Server vĩnh viễn
-            userRepository.save(registerForm); 
-            
+            userRepository.save(registerForm);
+
             // Xóa dữ liệu tạm trong session cho sạch sẽ
             session.removeAttribute("otpCode");
             session.removeAttribute("userEmail");
 
             System.out.println("LOG: Đăng ký thành công cho Member: " + registerForm.getEmail());
-            
+
             // Tự động chuyển sang trang Login sau khi thành công
-            return "redirect:/login"; 
+            return "redirect:/login";
 
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi: Email này đã tồn tại trong hệ thống!");
@@ -86,9 +86,9 @@ public class AuthController {
     // 4. POST: Xử lý Đăng nhập (Kiểm tra từ Database)
     @PostMapping("/login")
     public String processLogin(@RequestParam("email") String email,
-                               @RequestParam("password") String password,
-                               HttpSession session,
-                               Model model) {
+            @RequestParam("password") String password,
+            HttpSession session,
+            Model model) {
 
         // Tìm kiếm người dùng trong Database theo Email
         RegisterForm userInDb = userRepository.findByEmail(email);
@@ -111,4 +111,102 @@ public class AuthController {
         session.invalidate(); // Xóa toàn bộ session
         return "redirect:/home";
     }
+
+    // 1. Hiển thị trang đổi mật khẩu
+    @GetMapping("/change-password")
+    public String showChangePasswordForm(HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+        return "change-password";
+    }
+
+    // 2. Xử lý lưu mật khẩu mới
+    @PostMapping("/change-password")
+    public String processChangePassword(@RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword,
+            HttpSession session, Model model) {
+
+        RegisterForm sessionUser = (RegisterForm) session.getAttribute("loggedInUser");
+        if (sessionUser == null)
+            return "redirect:/login";
+
+        if (!sessionUser.getPassword().equals(currentPassword)) {
+            model.addAttribute("error", "Mật khẩu hiện tại không đúng!");
+            return "change-password";
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("error", "Xác nhận mật khẩu mới không khớp!");
+            return "change-password";
+        }
+
+        try {
+            // GỌI TRUY VẤN THUẦN ĐỂ ÉP CẬP NHẬT
+            userRepository.updatePassword(sessionUser.getEmail(), newPassword);
+
+            // Cập nhật lại mật khẩu trong Session để đồng bộ giao diện
+            sessionUser.setPassword(newPassword);
+            session.setAttribute("loggedInUser", sessionUser);
+
+            model.addAttribute("success", "Đổi mật khẩu thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi SQL: " + e.getMessage());
+        }
+
+        return "change-password";
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(HttpSession session, Model model) {
+        // Kiểm tra đăng nhập
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+        // Vì thông tin user đã có sẵn trong Session, Thymeleaf có thể lấy trực tiếp
+        return "profile";
+    }
+
+    // Thêm vào AuthController.java
+
+    @GetMapping("/profile/edit")
+public String showEditProfile(HttpSession session) {
+    if (session.getAttribute("loggedInUser") == null) {
+        return "redirect:/login";
+    }
+    return "edit-profile";
+}
+
+@PostMapping("/profile/edit")
+public String processEditProfile(
+        @RequestParam("firstName") String firstName,
+        @RequestParam("surname") String surname,
+        @RequestParam("shoppingPreference") String shoppingPreference,
+        HttpSession session) {
+    
+    RegisterForm sessionUser = (RegisterForm) session.getAttribute("loggedInUser");
+    if (sessionUser == null) return "redirect:/login";
+
+    try {
+        // 1. Ép SQL Server cập nhật trực tiếp (Bỏ qua mọi lỗi Validation hay Transient của Java)
+        userRepository.updateProfile(firstName, surname, shoppingPreference, sessionUser.getEmail());
+        
+        // 2. TÌM LẠI để làm tươi Session
+        RegisterForm updatedUser = userRepository.findByEmail(sessionUser.getEmail());
+        
+        // 3. Gán lại code từ session cũ sang đối tượng mới (vì code là @Transient nên findByEmail sẽ ra null)
+        if (updatedUser != null) {
+            updatedUser.setCode(sessionUser.getCode());
+            session.setAttribute("loggedInUser", updatedUser);
+        }
+        
+        System.out.println("Cập nhật thành công cho: " + firstName);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
+    return "redirect:/profile";
+}
 }

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/image/css/Favorite.css">
-    <title>Nike - Favorites</title>
-    
+    <title>Nike - Danh sách yêu thích</title>
 </head>
 <body>
     <header>
@@ -16,23 +15,23 @@
                     <img src="image/jordanIcon.png" alt="Jordan">
                 </div>
                 <div class="top-right-links">
-                    <a href="#">Find a Store</a>
+                    <a href="#">Tìm cửa hàng</a>
                     <span>|</span>
-                    <a href="#">Help</a>
+                    <a href="#">Trợ giúp</a>
                     <span>|</span>
 
                     <th:block th:if="${session.loggedInUser == null}">
-                        <a href="http://localhost:8080/login">Login</a>
+                        <a href="http://localhost:8080/login">Đăng nhập</a>
                         <span>|</span>
-                        <a th:href="@{/checkMail}">Sign In</a>
+                        <a th:href="@{/checkMail}">Tham gia</a>
                     </th:block>
 
                     <th:block th:unless="${session.loggedInUser == null}">
                         <span style="font-weight: 600;">
-                            Hi, <span th:text="${session.loggedInUser.firstName}">Member</span>
+                            Chào, <span th:text="${session.loggedInUser.firstName}">Thành viên</span>
                         </span>
                         <span>|</span>
-                        <a th:href="@{/logout}" style="color: #d43f3a;">Log Out</a>
+                        <a th:href="@{/logout}" style="color: #d43f3a;">Đăng xuất</a>
                     </th:block>
                 </div>
             </div>
@@ -47,20 +46,20 @@
                 <div class="nav-links">
 
                     <div class="nav-item">
-                        <a href="#">New & Featured</a>
+                        <a href="#">Mới & Nổi bật</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <div class="dropdown-column">
-                                    <h3>Featured</h3>
+                                    <h3>Nổi bật</h3>
                                     <ul>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Bestsellers</a></li>
-                                        <li><a href="#">Member Exclusive</a></li>
-                                        <li><a href="#">SNKRS Launch Calendar</a></li>
+                                        <li><a href="#">Hàng mới về</a></li>
+                                        <li><a href="#">Sản phẩm bán chạy</a></li>
+                                        <li><a href="#">Ưu đãi thành viên</a></li>
+                                        <li><a href="#">Lịch ra mắt SNKRS</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Shop Icons</h3>
+                                    <h3>Biểu tượng</h3>
                                     <ul>
                                         <li><a href="#">Air Force 1</a></li>
                                         <li><a href="#">Air Jordan 1</a></li>
@@ -70,11 +69,11 @@
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Trending</h3>
+                                    <h3>Xu hướng</h3>
                                     <ul>
-                                        <li><a href="#">Shop Sport</a></li>
+                                        <li><a href="#">Cửa hàng thể thao</a></li>
                                         <li><a href="#">Adidas vs Nike</a></li>
-                                        <li><a href="#">Retro Running</a></li>
+                                        <li><a href="#">Giày chạy Retro</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -82,44 +81,44 @@
                     </div>
 
                     <div class="nav-item">
-                        <a href="#">Men</a>
+                        <a href="#">Nam</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <div class="dropdown-column">
-                                    <h3>Featured</h3>
+                                    <h3>Nổi bật</h3>
                                     <ul>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Bestsellers</a></li>
-                                        <li><a href="#">Shop All Sale</a></li>
+                                        <li><a href="#">Hàng mới về</a></li>
+                                        <li><a href="#">Sản phẩm bán chạy</a></li>
+                                        <li><a href="#">Xem tất cả khuyến mãi</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Shoes</h3>
+                                    <h3>Giày</h3>
                                     <ul>
-                                        <li><a href="#">All Shoes</a></li>
-                                        <li><a href="#">Lifestyle</a></li>
+                                        <li><a href="#">Tất cả giày</a></li>
+                                        <li><a href="#">Thời trang đời sống</a></li>
                                         <li><a href="#">Jordan</a></li>
-                                        <li><a href="#">Running</a></li>
-                                        <li><a href="#">Basketball</a></li>
-                                        <li><a href="#">Football</a></li>
+                                        <li><a href="#">Chạy bộ</a></li>
+                                        <li><a href="#">Bóng rổ</a></li>
+                                        <li><a href="#">Bóng đá</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Clothing</h3>
+                                    <h3>Quần áo</h3>
                                     <ul>
-                                        <li><a href="#">All Clothing</a></li>
-                                        <li><a href="#">Tops & T-Shirts</a></li>
-                                        <li><a href="#">Shorts</a></li>
-                                        <li><a href="#">Hoodies & Sweatshirts</a></li>
-                                        <li><a href="#">Pants & Leggings</a></li>
+                                        <li><a href="#">Tất cả quần áo</a></li>
+                                        <li><a href="#">Áo thun & Áo kiểu</a></li>
+                                        <li><a href="#">Quần short</a></li>
+                                        <li><a href="#">Áo Hoodie & Áo nỉ</a></li>
+                                        <li><a href="#">Quần dài & Leggings</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Accessories</h3>
+                                    <h3>Phụ kiện</h3>
                                     <ul>
-                                        <li><a href="#">All Accessories</a></li>
-                                        <li><a href="#">Bags & Backpacks</a></li>
-                                        <li><a href="#">Socks</a></li>
+                                        <li><a href="#">Tất cả phụ kiện</a></li>
+                                        <li><a href="#">Túi & Balo</a></li>
+                                        <li><a href="#">Tất (Vớ)</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -127,43 +126,43 @@
                     </div>
 
                     <div class="nav-item">
-                        <a href="#">Women</a>
+                        <a href="#">Nữ</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <div class="dropdown-column">
-                                    <h3>Featured</h3>
+                                    <h3>Nổi bật</h3>
                                     <ul>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Bestsellers</a></li>
-                                        <li><a href="#">Shop All Sale</a></li>
+                                        <li><a href="#">Hàng mới về</a></li>
+                                        <li><a href="#">Sản phẩm bán chạy</a></li>
+                                        <li><a href="#">Xem tất cả khuyến mãi</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Shoes</h3>
+                                    <h3>Giày</h3>
                                     <ul>
-                                        <li><a href="#">All Shoes</a></li>
-                                        <li><a href="#">Lifestyle</a></li>
-                                        <li><a href="#">Running</a></li>
-                                        <li><a href="#">Gym & Training</a></li>
+                                        <li><a href="#">Tất cả giày</a></li>
+                                        <li><a href="#">Thời trang đời sống</a></li>
+                                        <li><a href="#">Chạy bộ</a></li>
+                                        <li><a href="#">Tập luyện & Gym</a></li>
                                         <li><a href="#">Jordan</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Clothing</h3>
+                                    <h3>Quần áo</h3>
                                     <ul>
-                                        <li><a href="#">All Clothing</a></li>
-                                        <li><a href="#">Performance Essentials</a></li>
-                                        <li><a href="#">Sports Bras</a></li>
-                                        <li><a href="#">Pants & Leggings</a></li>
-                                        <li><a href="#">Tops & T-Shirts</a></li>
+                                        <li><a href="#">Tất cả quần áo</a></li>
+                                        <li><a href="#">Đồ tập thiết yếu</a></li>
+                                        <li><a href="#">Áo ngực thể thao</a></li>
+                                        <li><a href="#">Quần dài & Leggings</a></li>
+                                        <li><a href="#">Áo thun & Áo kiểu</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Accessories</h3>
+                                    <h3>Phụ kiện</h3>
                                     <ul>
-                                        <li><a href="#">Bags & Backpacks</a></li>
-                                        <li><a href="#">Socks</a></li>
-                                        <li><a href="#">Hats & Headwear</a></li>
+                                        <li><a href="#">Túi & Balo</a></li>
+                                        <li><a href="#">Tất (Vớ)</a></li>
+                                        <li><a href="#">Mũ & Đồ đội đầu</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -171,42 +170,42 @@
                     </div>
 
                     <div class="nav-item">
-                        <a href="#">Kids</a>
+                        <a href="#">Trẻ em</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <div class="dropdown-column">
-                                    <h3>Featured</h3>
+                                    <h3>Nổi bật</h3>
                                     <ul>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Bestsellers</a></li>
-                                        <li><a href="#">Back to School</a></li>
+                                        <li><a href="#">Hàng mới về</a></li>
+                                        <li><a href="#">Sản phẩm bán chạy</a></li>
+                                        <li><a href="#">Đồ dùng đi học</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Shoes</h3>
+                                    <h3>Giày</h3>
                                     <ul>
-                                        <li><a href="#">All Shoes</a></li>
-                                        <li><a href="#">Lifestyle</a></li>
+                                        <li><a href="#">Tất cả giày</a></li>
+                                        <li><a href="#">Thời trang đời sống</a></li>
                                         <li><a href="#">Jordan</a></li>
-                                        <li><a href="#">Football</a></li>
-                                        <li><a href="#">Running</a></li>
+                                        <li><a href="#">Bóng đá</a></li>
+                                        <li><a href="#">Chạy bộ</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Clothing</h3>
+                                    <h3>Quần áo</h3>
                                     <ul>
-                                        <li><a href="#">All Clothing</a></li>
-                                        <li><a href="#">Tops & T-Shirts</a></li>
-                                        <li><a href="#">Sport Bras</a></li>
-                                        <li><a href="#">Hoodies & Sweatshirts</a></li>
+                                        <li><a href="#">Tất cả quần áo</a></li>
+                                        <li><a href="#">Áo thun & Áo kiểu</a></li>
+                                        <li><a href="#">Áo ngực thể thao</a></li>
+                                        <li><a href="#">Áo Hoodie & Áo nỉ</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Kids By Age</h3>
+                                    <h3>Trẻ em theo độ tuổi</h3>
                                     <ul>
-                                        <li><a href="#">Older Kids (7 - 14 years)</a></li>
-                                        <li><a href="#">Younger Kids (4 - 7 years)</a></li>
-                                        <li><a href="#">Babies & Toddlers (0 - 4 years)</a></li>
+                                        <li><a href="#">Trẻ lớn (7 - 14 tuổi)</a></li>
+                                        <li><a href="#">Trẻ nhỏ (4 - 7 tuổi)</a></li>
+                                        <li><a href="#">Trẻ sơ sinh & Trẻ mới biết đi (0 - 4 tuổi)</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -214,38 +213,38 @@
                     </div>
 
                     <div class="nav-item">
-                        <a href="#">Sale</a>
+                        <a href="#">Giảm giá</a>
                         <div class="dropdown-menu">
                             <div class="dropdown-inner">
                                 <div class="dropdown-column">
-                                    <h3>Sale & Offers</h3>
+                                    <h3>Ưu đãi & Khuyến mãi</h3>
                                     <ul>
-                                        <li><a href="#">Shop All Sale</a></li>
-                                        <li><a href="#">Bestsellers</a></li>
+                                        <li><a href="#">Xem tất cả giảm giá</a></li>
+                                        <li><a href="#">Sản phẩm bán chạy</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Men's Sale</h3>
+                                    <h3>Giảm giá Nam</h3>
                                     <ul>
-                                        <li><a href="#">Shoes</a></li>
-                                        <li><a href="#">Clothing</a></li>
-                                        <li><a href="#">Accessories</a></li>
+                                        <li><a href="#">Giày</a></li>
+                                        <li><a href="#">Quần áo</a></li>
+                                        <li><a href="#">Phụ kiện</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Women's Sale</h3>
+                                    <h3>Giảm giá Nữ</h3>
                                     <ul>
-                                        <li><a href="#">Shoes</a></li>
-                                        <li><a href="#">Clothing</a></li>
-                                        <li><a href="#">Accessories</a></li>
+                                        <li><a href="#">Giày</a></li>
+                                        <li><a href="#">Quần áo</a></li>
+                                        <li><a href="#">Phụ kiện</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-column">
-                                    <h3>Kids' Sale</h3>
+                                    <h3>Giảm giá Trẻ em</h3>
                                     <ul>
-                                        <li><a href="#">Shoes</a></li>
-                                        <li><a href="#">Clothing</a></li>
-                                        <li><a href="#">Accessories</a></li>
+                                        <li><a href="#">Giày</a></li>
+                                        <li><a href="#">Quần áo</a></li>
+                                        <li><a href="#">Phụ kiện</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -258,7 +257,7 @@
                 <div class="nav-actions">
                     <div class="search-container">
                         <i class="fa-solid fa-magnifying-glass search-icon-btn"></i>
-                        <input type="text" placeholder="Search">
+                        <input type="text" placeholder="Tìm kiếm">
                     </div>
                     <a href="http://localhost:8080/favorites" class="action-icon"><i class="fa-regular fa-heart"></i></a>
                     <a href="#" class="action-icon"><i class="fa-solid fa-bag-shopping"></i></a>
@@ -268,15 +267,16 @@
 
         <div class="promo-bar-wrapper">
             <div class="inner-content promo-content" style="display: block;">
-                <div class="promo-text">Free Standard Delivery & 30-Day Free Returns</div>
+                <div class="promo-text">Giao hàng tiêu chuẩn miễn phí & Trả hàng miễn phí trong 30 ngày</div>
                 <div class="promo-subtext">
-                    <a href="#">Join Now</a>
-                    <a href="#">View Details</a>
+                    <a href="#">Tham gia ngay</a>
+                    <a href="#">Xem chi tiết</a>
                 </div>
             </div>
         </div>
     </header>
-     <div class="search-overlay" id="searchOverlay">
+
+    <div class="search-overlay" id="searchOverlay">
         <div class="search-overlay-content">
             <div class="search-top-bar">
                 <a href="#" class="overlay-logo">
@@ -285,34 +285,35 @@
 
                 <div class="big-search-container">
                     <i class="fa-solid fa-magnifying-glass search-icon-big"></i>
-                    <input type="text" placeholder="Search" id="bigSearchInput">
+                    <input type="text" placeholder="Tìm kiếm" id="bigSearchInput">
                 </div>
 
-                <button class="btn-cancel" onclick="closeSearch()">Cancel</button>
+                <button class="btn-cancel" onclick="closeSearch()">Hủy</button>
             </div>
 
             <div class="search-suggestions">
-                <p class="suggestion-title">Popular Search Terms</p>
+                <p class="suggestion-title">Từ khóa tìm kiếm phổ biến</p>
                 <div class="tags-container">
                     <a href="#" class="search-tag">luka 5</a>
                     <a href="#" class="search-tag">air force 1</a>
                     <a href="#" class="search-tag">jordan</a>
                     <a href="#" class="search-tag">air max</a>
-                    <a href="#" class="search-tag">basketball shoes</a>
+                    <a href="#" class="search-tag">giày bóng rổ</a>
                     <a href="#" class="search-tag">nike tech</a>
                 </div>
             </div>
         </div>
         <div class="overlay-backdrop" onclick="closeSearch()"></div>
     </div>
+
     <main class="favourites-container">
-    <h1 class="favourites-header-title">Favourites</h1>
+        <h1 class="favourites-header-title">Danh sách yêu thích</h1>
 
-    <div class="empty-state-wrapper">
-        <p class="empty-state-message">Items added to your Favourites will be saved here.</p>
-    </div>
-</main>
+        <div class="empty-state-wrapper">
+            <p class="empty-state-message">Các sản phẩm bạn yêu thích sẽ được lưu tại đây.</p>
+        </div>
+    </main>
 
-<script src="/image/js/Favorite.js"></script>
+    <script src="/image/js/Favorite.js"></script>
 </body>
 </html>
