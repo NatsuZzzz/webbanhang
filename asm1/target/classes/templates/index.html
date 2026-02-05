@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Nike. Just Do It. Nike VN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/image/css/style.css}">
-    <link rel="stylesheet" th:href="@{/image/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+
 
 </head>
 
@@ -16,7 +16,7 @@
     <section class="hero-slider">
         <div class="slide active">
             <video muted playsinline class="bg-video">
-                <source src="video/video1.mp4" type="video/mp4">
+                <source th:src="@{/video/video1.mp4}" type="video/mp4">
             </video>
             <div class="hero-content">
                 <h1>Đồ Ăn Tươi Mới</h1>
@@ -30,7 +30,7 @@
 
         <div class="slide">
             <video muted playsinline class="bg-video">
-                <source src="video/video2.mp4" type="video/mp4">
+                <source th:src="@{/video/video2.mp4}" type="video/mp4">
             </video>
             <div class="hero-content">
                 <div class="hero-actions">
@@ -56,30 +56,33 @@
 
     <section class="featured-section inner-content">
         <div class="featured-item">
-            <img src="image/gaindex1.webp" alt="ga gion">
+            <img th:src="@{/images/gaindex1.webp}" alt="ga gion">
             <div class="item-overlay">
                 <p class="category">Gà Giòn Vui Vẻ</p>
                 <h3 class="item-title">Giòn, Thơm Ngon</h3>
                 <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
+    
         <div class="featured-item">
-            <img src="image/gaindex2.webp" alt="ga cay">
+            <img th:src="@{/images/gaindex2.webp}" alt="ga cay">
             <div class="item-overlay">
                 <p class="category">Gà Sốt Cay</p>
                 <h3 class="item-title">Sẵn sàng để bùng nổ</h3>
                 <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
+    
         <div class="featured-item">
-            <img src="image/my1.webp" alt="my y">
+            <img th:src="@{/images/my1.webp}" alt="my y">
             <div class="item-overlay">
-                <p class="category">Mỳ Ý Sốt Bò Bầm</p>
+                <p class="category">Mỳ Ý Sốt Bò Bằm</p>
                 <a href="#" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
+    
         <div class="featured-item">
-            <img src="image/kem1.webp" alt="kem lanh">
+            <img th:src="@{/images/kem1.webp}" alt="kem lanh">
             <div class="item-overlay">
                 <p class="category">Món Tráng Miệng</p>
                 <h3 class="item-title">Mát Lạnh</h3>
@@ -87,6 +90,7 @@
             </div>
         </div>
     </section>
+    
 
  
 
@@ -94,6 +98,7 @@
 
     <div th:replace="fragments/footer :: footer"></div>
 
-<script src="/image/js/index.js"></script>
+    <script th:src="@{/js/index.js}"></script>
+
 </body>
 </html>
