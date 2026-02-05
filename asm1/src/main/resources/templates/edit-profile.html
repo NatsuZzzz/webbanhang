@@ -8,6 +8,8 @@
 </head>
 
 <body>
+        <!-- header -->
+        <div th:replace="fragments/header :: header"></div>
     <div class="container">
         <div class="header"><img th:src="@{/image/icon.png}" alt="Nike"></div>
         <h1>Chỉnh sửa hồ sơ</h1>
@@ -44,6 +46,13 @@
             <a th:href="@{/profile}" class="sub-link">Hủy bỏ</a>
         </div>
     </div>
+
+
+
+      <!-- footerfooter -->
+      <div th:replace="fragments/footer :: footer"></div>
+
+   
 </body>
 
 </html>

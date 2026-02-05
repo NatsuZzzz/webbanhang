@@ -9,6 +9,9 @@
 </head>
 
 <body>
+        <!-- header -->
+        <div th:replace="fragments/header :: header"></div>
+
     <header>
         <div class="top-bar-wrapper">
             <div class="inner-content top-bar-content">
@@ -328,5 +331,7 @@
 </footer>
 <script th:src="@{/image/js/ProductDetail.js}"></script>
 
+ <!-- footerfooter -->
+ <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

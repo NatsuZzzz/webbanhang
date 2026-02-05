@@ -8,6 +8,8 @@
     <title>Giỏ hàng</title>
 </head>
 <body>
+        <!-- header -->
+        <div th:replace="fragments/header :: header"></div>
     <header>
         <div class="top-bar-wrapper">
             <div class="inner-content top-bar-content">
@@ -218,6 +220,14 @@
             </div>
         </div>
     </footer>
+
+
+
+      <!-- footerfooter -->
+      <div th:replace="fragments/footer :: footer"></div>
+
+      <script th:src="@{/js/index.js}"></script>
+      
     <script th:src="@{/image/js/Cart.js}"></script>
 </body>
 </html>

@@ -24,6 +24,9 @@
     </style>
 </head>
 <body>
+        <!-- header -->
+        <div th:replace="fragments/header :: header"></div>
+
     <div class="login-container">
         <div class="logo-box">
             <img src="/image/icon.png" alt="Nike Logo">
@@ -52,5 +55,9 @@
             Chưa là Thành viên? <a th:href="@{/checkMail}">Tham gia với chúng tôi.</a>
         </p>
     </div>
+
+      <!-- footerfooter -->
+      <div th:replace="fragments/footer :: footer"></div>
+      
 </body>
 </html>
