@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Nike. Just Do It. Nike VN</title>
+    <title>Web - FastFood</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/index.css}">
 
@@ -60,7 +60,7 @@
             <div class="item-overlay">
                 <p class="category">Gà Giòn Vui Vẻ</p>
                 <h3 class="item-title">Giòn, Thơm Ngon</h3>
-                <a href="#" class="btn-shop">Đặt Ngay</a>
+                <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
     
@@ -69,7 +69,7 @@
             <div class="item-overlay">
                 <p class="category">Gà Sốt Cay</p>
                 <h3 class="item-title">Sẵn sàng để bùng nổ</h3>
-                <a href="#" class="btn-shop">Đặt Ngay</a>
+                <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
     
@@ -77,7 +77,7 @@
             <img th:src="@{/images/my1.webp}" alt="my y">
             <div class="item-overlay">
                 <p class="category">Mỳ Ý Sốt Bò Bằm</p>
-                <a href="#" class="btn-shop">Đặt Ngay</a>
+                <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
     
@@ -86,7 +86,7 @@
             <div class="item-overlay">
                 <p class="category">Món Tráng Miệng</p>
                 <h3 class="item-title">Mát Lạnh</h3>
-                <a href="#" class="btn-shop">Đặt Ngay</a>
+                <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
     </section>
