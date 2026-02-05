@@ -1,10 +1,11 @@
 package com.example.asm1.service;
 
-import com.example.asm1.Entity.Product;
-import com.example.asm1.repository.ProductRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.asm1.Entity.Product;
+import com.example.asm1.repository.ProductRepository;
 
 @Service
 public class ProductService {
@@ -26,6 +27,10 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public void saveProduct(Product product) {
+    productRepository.save(product);
+}
 
 
 
