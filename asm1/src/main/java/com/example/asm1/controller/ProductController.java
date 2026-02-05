@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/list")
 public class ProductController {
@@ -51,8 +50,9 @@ public class ProductController {
 
     // ✅ Trang chi tiết sản phẩm
     @GetMapping("/product/detail/{id}")
-    public String showProductDetail(@PathVariable Integer id, Model model) {
-
+    public String productDetail(
+            @PathVariable("id") Integer id,
+            Model model) {
         Product product = productService.getProductById(id);
 
         if (product == null) {

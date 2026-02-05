@@ -1,223 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/image/css/Cart.css}">
     <title>Giỏ hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <div class="top-bar-wrapper">
-            <div class="inner-content top-bar-content">
-                <div class="jordan-logo">
-                    <img src="image/jordanIcon.png" alt="Jordan">
-                </div>
-                <div class="top-right-links">
-                    <a href="#">Tìm cửa hàng</a>
-                    <span>|</span>
-                    <a href="#">Trợ giúp</a>
-                    <span>|</span>
 
-                    <th:block th:if="${session.loggedInUser == null}">
-                        <a href="http://localhost:8080/login">Đăng nhập</a>
-                        <span>|</span>
-                        <a th:href="@{/checkMail}">Tham gia</a>
-                    </th:block>
+<body class="bg-gray-100 min-h-screen">
 
-                    <th:block th:unless="${session.loggedInUser == null}">
-                        <span style="font-weight: 600;">
-                            Chào, <span th:text="${session.loggedInUser.firstName}">Thành viên</span>
-                        </span>
-                        <span>|</span>
-                        <a th:href="@{/logout}" style="color: #d43f3a;">Đăng xuất</a>
-                    </th:block>
-                </div>
-            </div>
+    <div class="max-w-6xl mx-auto px-6 py-10">
+
+        <h1 class="text-3xl font-black mb-6">🛒 Giỏ hàng của bạn</h1>
+
+        <div th:if="${#lists.isEmpty(cart)}" class="bg-white p-8 rounded-xl text-center text-gray-400">
+            😢 Giỏ hàng trống
         </div>
 
-        <nav class="main-nav-wrapper">
-            <div class="inner-content">
-                <a href="http://localhost:8080/home" class="nike-logo">
-                    <img src="image/icon.png" alt="Nike">
+        <div th:if="${!#lists.isEmpty(cart)}" class="space-y-6">
+
+            <div th:each="item : ${cart}" class="bg-white p-6 rounded-xl shadow flex gap-6 items-center">
+
+                <img th:src="@{${item.product.imageUrl}}" class="w-24 h-24 object-cover rounded">
+
+                <div class="flex-1">
+                    <h2 class="font-bold text-lg" th:text="${item.product.name}"></h2>
+
+                    <p class="text-gray-500">
+                        Số lượng:
+                        <span class="font-bold text-gray-800" th:text="${item.quantity}"></span>
+                    </p>
+
+
+                    <p class="text-red-600 font-bold">
+                        <span th:text="${#numbers.formatDecimal(item.totalPrice,0,'COMMA',0,'POINT')}"></span> đ
+                    </p>
+                </div>
+
+                <a th:href="@{'/cart/remove/' + ${item.product.id}}" class="text-red-600 hover:underline font-semibold">
+                    ❌ Xóa
                 </a>
 
-                <div class="nav-links">
-                    <div class="nav-item">
-                        <a href="#">Mới & Nổi bật</a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-inner">
-                                <div class="dropdown-column">
-                                    <h3>Nổi bật</h3>
-                                    <ul>
-                                        <li><a href="http://localhost:8080/new-arrivals">Hàng mới về</a></li>
-                                        <li><a href="#">Sản phẩm bán chạy</a></li>
-                                        <li><a href="#">Tất cả giảm giá</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown-column">
-                                    <h3>Biểu tượng</h3>
-                                    <ul>
-                                        <li><a href="#">Air Force 1</a></li>
-                                        <li><a href="#">Air Jordan 1</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nav-item"><a href="#">Nam</a></div>
-                    <div class="nav-item"><a href="#">Nữ</a></div>
-                    <div class="nav-item"><a href="#">Trẻ em</a></div>
-                    <div class="nav-item"><a href="#">Giảm giá</a></div>
-                </div>
-
-                <div class="nav-actions">
-                    <div class="search-container">
-                        <i class="fa-solid fa-magnifying-glass search-icon-btn"></i>
-                        <input type="text" placeholder="Tìm kiếm">
-                    </div>
-                    <a href="http://localhost:8080/favorites" class="action-icon"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#" class="action-icon"><i class="fa-solid fa-bag-shopping"></i></a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="promo-bar-wrapper">
-            <div class="inner-content promo-content" style="display: block;">
-                <div class="promo-text">Miễn phí giao hàng tiêu chuẩn & Miễn phí đổi trả trong 30 ngày</div>
-                <div class="promo-subtext">
-                    <a href="#">Tham gia ngay</a>
-                    <a href="#">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="cart-wrapper">
-            
-            <div class="cart-left">
-                <h2>Giỏ hàng</h2>
-
-                <div th:if="${#lists.isEmpty(cartItems)}">
-                    <p class="empty-msg">Chưa có sản phẩm nào trong giỏ hàng của bạn.</p>
-                </div>
-
-                <div th:each="item : ${cartItems}" class="cart-item">
-                    <div class="item-img">
-                        <img th:src="${item.imageUrl.startsWith('http') ? item.imageUrl : '/images/' + item.imageUrl}" alt="">
-                    </div>
-                    <div class="item-details">
-                        <div class="item-name" th:text="${item.name}">Nike Air Force 1</div>
-                        <div class="item-cat" th:text="${item.category}">Giày Nam</div>
-                        <div class="item-cat">Cỡ 42</div> 
-                        <div class="item-actions">
-                            <span><i class="fa-regular fa-heart"></i> Yêu thích</span>
-                            <span><i class="fa-regular fa-trash-can"></i> Xóa</span>
-                        </div>
-                    </div>
-                    <div class="item-price" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')} + '₫'">
-                        3,519,000₫
-                    </div>
-                </div>
-
-                <div style="margin-top: 40px;">
-                    <h2>Sản phẩm yêu thích</h2>
-                    <p class="empty-msg">Chưa có sản phẩm nào được lưu vào danh sách yêu thích.</p>
-                </div>
             </div>
 
-            <div class="cart-right">
-                <h2>Tóm tắt đơn hàng</h2>
-                <div class="summary-box">
-                    <div class="summary-row">
-                        <span>Tổng tiền sản phẩm</span>
-                        <span th:text="${#numbers.formatDecimal(subtotal, 0, 'POINT', 0, 'COMMA')} + '₫'">0₫</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Giao hàng & Xử lý</span>
-                        <span>Miễn phí</span>
-                    </div>
-                    
-                    <div class="summary-row total">
-                        <span>Tổng cộng</span>
-                        <span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'COMMA')} + '₫'">0₫</span>
-                    </div>
-
-                    <button class="btn-checkout" th:disabled="${#lists.isEmpty(cartItems)}">Thanh toán (Thành viên)</button>
-                </div>
+            <!-- TOTAL -->
+            <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+                <span class="text-xl font-bold">Tổng tiền:</span>
+                <span class="text-2xl text-red-600 font-black"
+                    th:text="${#numbers.formatDecimal(totalPrice,0,'COMMA',0,'POINT')} + ' đ'">
+                </span>
             </div>
+            <a th:href="@{/list/products}" class="text-red-600 font-semibold hover:underline">
+                ← Tiếp tục thêm sản phẩm
+            </a>
+            <div class="text-right">
+                <button class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold">
+                    ✅ Thanh toán
+                </button>
+            </div>
+
         </div>
 
-        <div class="recommend-section">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>Có thể bạn cũng thích</h2>
-                <div>
-                    <i class="fa-solid fa-chevron-left" style="padding: 10px; background: #f5f5f5; border-radius: 50%; cursor: pointer;"></i>
-                    <i class="fa-solid fa-chevron-right" style="padding: 10px; background: #e5e5e5; border-radius: 50%; cursor: pointer;"></i>
-                </div>
-            </div>
-            
-            <div class="scroll-container">
-                <div class="rec-card">
-                    <div class="rec-img"><img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/07548590-7d04-4648-944f-c38f4d54622b/air-jordan-1-mid-shoes-X5pM09.png" alt=""></div>
-                    <div class="item-name">Air Jordan 1 Mid</div>
-                    <div class="item-cat">Giày Nam</div>
-                    <div class="item-price">3,200,000₫</div>
-                </div>
-                </div>
-        </div>
     </div>
 
-    <footer class="nike-footer">
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Tìm cửa hàng</h4>
-                <ul>
-                    <li><a href="#">Trở thành thành viên</a></li>
-                    <li><a href="#">Đăng ký nhận email</a></li>
-                    <li><a href="#">Gửi phản hồi</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Hỗ trợ</h4>
-                <ul>
-                    <li><a href="#">Tình trạng đơn hàng</a></li>
-                    <li><a href="#">Giao hàng</a></li>
-                    <li><a href="#">Đổi trả</a></li>
-                    <li><a href="#">Thanh toán</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Về Nike</h4>
-                <ul>
-                    <li><a href="#">Tin tức</a></li>
-                    <li><a href="#">Tuyển dụng</a></li>
-                    <li><a href="#">Nhà đầu tư</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Mạng xã hội</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <span>© 2026 Nike, Inc. Bảo lưu mọi quyền</span>
-            <div class="footer-links">
-                <a href="#">Hướng dẫn</a>
-                <a href="#">Điều khoản sử dụng</a>
-                <a href="#">Chính sách bảo mật</a>
-            </div>
-        </div>
-    </footer>
-    <script th:src="@{/image/js/Cart.js}"></script>
 </body>
+
 </html>
