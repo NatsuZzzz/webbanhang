@@ -5,14 +5,14 @@
     <title>Web - FastFood</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/index.css}">
-
-
 </head>
 
 <body>
+
     <!-- header -->
     <div th:replace="fragments/header :: header"></div>
-<!-- centercenter -->
+
+    <!-- center -->
     <section class="hero-slider">
         <div class="slide active">
             <video muted playsinline class="bg-video">
@@ -63,7 +63,7 @@
                 <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
-    
+
         <div class="featured-item">
             <img th:src="@{/images/gaindex2.webp}" alt="ga cay">
             <div class="item-overlay">
@@ -72,7 +72,7 @@
                 <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
-    
+
         <div class="featured-item">
             <img th:src="@{/images/my1.webp}" alt="my y">
             <div class="item-overlay">
@@ -80,7 +80,7 @@
                 <a th:href="@{/list/products}" class="btn-shop">Đặt Ngay</a>
             </div>
         </div>
-    
+
         <div class="featured-item">
             <img th:src="@{/images/kem1.webp}" alt="kem lanh">
             <div class="item-overlay">
@@ -90,11 +90,6 @@
             </div>
         </div>
     </section>
-    
-
- 
-
-
 
     <div th:replace="fragments/footer :: footer"></div>
 
